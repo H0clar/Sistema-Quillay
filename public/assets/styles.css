@@ -1,0 +1,122 @@
+/* Estilos globales */
+html, body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    height: 100%;
+}
+
+/* Contenedor principal */
+.content {
+    display: flex;
+    flex-grow: 1;
+    align-items: flex-start;
+    height: 100%;
+}
+
+/* header */
+header {
+    background-color: #628C1A;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-icons {
+    display: flex; /* Alinear las imágenes horizontalmente */
+    margin-left: 10px; /* Alinear los iconos verticalmente */
+}
+
+.icon-container {
+    margin-left: 30px; /* Espacio entre los iconos */
+}
+
+/* Ajustar el margen izquierdo del texto "Cerrar Sesión" */
+.logout {
+    margin-left: 10px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 300px;
+    background-color: #81AE28;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    height: 100vh;
+    margin-top: 0;
+}
+
+.sidebar .admin-panel {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 5px;
+    background-color: #628C1A;
+    border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #4A7510;
+}
+
+/* Contenedor del logo */
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #628C1A;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.logo-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Contenido principal */
+.container {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .icon-container {
+        margin-left: 10px;
+    }
+
+    /* Agregar estilos adicionales para dispositivos móviles si es necesario */
+}
