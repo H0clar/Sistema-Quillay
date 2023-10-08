@@ -1,2 +1,1 @@
-
-![diagrama](https://github.com/H0clar/Sistema-Quillay/assets/118459488/6d5b6dac-a277-461f-8b93-9d003331ff93)
+![diagrama entidad relacion](https://github.com/H0clar/Sistema-Quillay/assets/118459488/5e92b8db-263e-4fc8-9916-f0d6963eb2ab)
