@@ -1,0 +1,70 @@
+/* Estilo para la tabla */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    margin-top: 40px;
+}
+
+/* Estilo para el encabezado de la tabla */
+.table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+/* Estilo para las celdas de la tabla */
+.table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+/* Estilo para las filas impares */
+.table tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+/* Estilo para los botones de Acciones */
+.btn-primary.user-edit,
+.btn-danger.user-delete {
+    display: inline-block;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilo adicional para separar los botones Editar y Eliminar */
+.btn-primary.user-edit {
+    margin-right: 10px;
+}
+
+/* Estilo para recortar texto largo en la celda "Nombre" */
+.truncate-text {
+    max-width: 200px; /* Ajusta este valor según el ancho deseado */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+
+
+.add-nivel-button {
+    background-color: #628C1A;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    
+}
+
+.add-nivel-button:hover {
+    background-color: #567E17;
+}
+
+

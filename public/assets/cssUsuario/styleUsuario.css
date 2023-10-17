@@ -1,0 +1,145 @@
+/* Estilos para el formulario de filtrado por rol */
+.form-inline select#rol,
+.form-inline input#nombre {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: auto;
+}
+
+.form-inline button[type="submit"] {
+    background-color: #628C1A;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.form-inline .form-group {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.form-inline .form-group:last-child button {
+    vertical-align: top;
+    margin-top: 1px;
+}
+
+/* Estilos para los botones de editar y eliminar */
+.user-edit,
+.user-delete {
+    display: inline-block;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user-edit {
+    background-color: #628C1A;
+    color: #fff;
+}
+
+.user-delete {
+    background-color: #628C1A;
+    color: #fff;
+    margin-left: 5px;
+}
+
+/* Estilos para el título del formulario de creación de usuarios */
+.user-form-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilos para el formulario de creación de usuarios */
+.user-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.user-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.user-form .form-group {
+    margin-bottom: 20px;
+}
+
+.user-form .form-control {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.user-form-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #628C1A;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.user-form-button:last-child {
+    margin-right: 0;
+}
+
+.user-form-button.cancel {
+    background-color: #ccc;
+    color: #333;
+}
+
+/* Estilos para los formularios de filtrado */
+.form-inline {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.form-inline .form-group {
+    margin-right: 10px;
+}
+
+/* Estilos para la tabla de usuarios */
+.user-table {
+    margin-top: 60px;
+}
+
+.user-table td {
+    padding: 8px;
+}
+
+.user-table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.user-table .user-edit,
+.user-table .user-delete {
+    margin-right: 5px;
+}
+
+/* Estilos para el botón "Agregar Usuario" */
+.add-user-button {
+    margin-top: 20px;
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #628C1A;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+

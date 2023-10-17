@@ -8,22 +8,22 @@ class UsuarioController extends Controller
 {
     public function index()
     {
-        // No necesitas recuperar los usuarios aquí, ya que estás controlando solo las rutas y vistas.
-        return view('usuario.index');
+        return view('Administracion.Usuario.index');
     }
 
     public function create()
     {
-        return view('usuario.create');
+        return view('Administracion.Usuario.create');
     }
 
     public function edit($id)
     {
-        return view('usuario.edit');
+        return view('Administracion.Usuario.edit', ['id' => $id]);
     }
 
     public function destroy($id)
     {
-        return view('usuario.delete');
+        // Similar a la función edit, puedes pasar solo el ID a la vista.
+        return view('Administracion.Usuario.delete', ['id' => $id]);
     }
 }
