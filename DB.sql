@@ -426,4 +426,8 @@ BEGIN
     END IF;
 END;
 //
+<<<<<<< HEAD
 DELIMITER ;
+=======
+DELIMITER ;
+>>>>>>> b0422ce6131b195955b226acec222a871f54e54f
