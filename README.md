@@ -1,8 +1,7 @@
 ![diagrama entidad relacion](https://github.com/H0clar/Sistema-Quillay/assets/118459488/5e92b8db-263e-4fc8-9916-f0d6963eb2ab)
 
 
+![material-educativo-17 octubre](https://github.com/H0clar/Sistema-Quillay/assets/118459488/9b906ee1-af8b-4f31-8f1c-b1f410bcf801)
 
-![mocup1](https://github.com/H0clar/Sistema-Quillay/assets/118459488/3e1ac3d7-f6ba-480f-9003-134229ab0fc0)
 
-
-![mocup2](https://github.com/H0clar/Sistema-Quillay/assets/118459488/ed9f673b-c664-45c8-b301-dff33e20b4e8)
+![crear-material-educativo](https://github.com/H0clar/Sistema-Quillay/assets/118459488/c54f3e4a-e955-49c7-a2ad-a24425c25302)
