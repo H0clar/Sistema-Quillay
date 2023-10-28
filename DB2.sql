@@ -1,141 +1,139 @@
--- crear tabla TipoUsuario
+-- Crear tabla TipoUsuario
 CREATE TABLE TipoUsuario (
-    TipoUsuarioID INT PRIMARY KEY,
+    TipoUsuarioID INT AUTO_INCREMENT PRIMARY KEY,
     Tipo VARCHAR(50)
 );
 
--- insertar tipos de usuario
-INSERT INTO TipoUsuario (TipoUsuarioID, Tipo) VALUES 
-    (1, 'Profesor'),
-    (2, 'Trabajador_UTP'),
-    (3, 'Administrador');
+-- Insertar tipos de usuario
+INSERT INTO TipoUsuario (Tipo) VALUES 
+    ('Profesor'),
+    ('Trabajador_UTP'),
+    ('Administrador');
 
--- crear tabla Nivel_Educativo
+-- Crear tabla Nivel_Educativo
 CREATE TABLE Nivel_Educativo (
-    NivelEducativoID INT PRIMARY KEY,
+    NivelEducativoID INT AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(255),
     Abreviatura VARCHAR(10)
 );
 
--- insertar niveles educativos
-INSERT INTO Nivel_Educativo (NivelEducativoID, Nombre, Abreviatura) VALUES
-    (1, 'Nivel 1 EDUCACION ESPECIAL TRASTORNOS ESPECIFICOS DEL LENGUAJE', 'N1'),
-    (2, 'Nivel 2 EDUCACION PARVULARIA', 'N2'),
-    (3, 'Nivel 3 ENSEÑANZA BÁSICA', 'N3');
+-- Insertar niveles educativos
+INSERT INTO Nivel_Educativo (Nombre, Abreviatura) VALUES
+    ('Nivel 1 EDUCACION ESPECIAL TRASTORNOS ESPECIFICOS DEL LENGUAJE', 'N1'),
+    ('Nivel 2 EDUCACION PARVULARIA', 'N2'),
+    ('Nivel 3 ENSEÑANZA BÁSICA', 'N3');
 
--- crear tabla Cursos
+-- Crear tabla Cursos
 CREATE TABLE Cursos (
-    CursoID INT PRIMARY KEY,
+    CursoID INT AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(50),
     NivelEducativoID INT,
-    Abreviatura VARCHAR(10),
-    FOREIGN KEY (NivelEducativoID) REFERENCES Nivel_Educativo(NivelEducativoID)
+    Abreviatura VARCHAR(10)
 );
 
--- insertar cursos
-INSERT INTO Cursos (CursoID, Nombre, NivelEducativoID, Abreviatura) VALUES
-    (1, 'Medio mayor', 1, 'MM'), 
-    (2, 'Primer nivel de transición (prekinder)', 1, 'NT1'), 
-    (3, 'Segundo nivel de transición', 1, 'NT2'),
-    (4, 'Primer nivel de transición (prekinder)', 2, 'PK1'), 
-    (5, 'Segundo nivel de Kinder', 2, 'K2'),
-    (6, 'Primero básico', 3, '1B'), 
-    (7, 'Segundo básico', 3, '2B'), 
-    (8, 'Tercero básico', 3, '3B'), 
-    (9, 'Cuarto básico', 3, '4B'), 
-    (10, 'Quinto básico', 3, '5B'), 
-    (11, 'Sexto básico', 3, '6B'), 
-    (12, 'Séptimo básico', 3, '7B'), 
-    (13, 'Octavo básico', 3, '8B');
+-- Insertar cursos
+INSERT INTO Cursos (Nombre, NivelEducativoID, Abreviatura) VALUES
+    ('Medio mayor', 1, 'MM'), 
+    ('Primer nivel de transición (prekinder)', 1, 'NT1'), 
+    ('Segundo nivel de transición', 1, 'NT2'),
+    ('Primer nivel de transición (prekinder)', 2, 'PK1'), 
+    ('Segundo nivel de Kinder', 2, 'K2'),
+    ('Primero básico', 3, '1B'), 
+    ('Segundo básico', 3, '2B'), 
+    ('Tercero básico', 3, '3B'), 
+    ('Cuarto básico', 3, '4B'), 
+    ('Quinto básico', 3, '5B'), 
+    ('Sexto básico', 3, '6B'), 
+    ('Séptimo básico', 3, '7B'), 
+    ('Octavo básico', 3, '8B');
 
--- crear tabla Asignatura
+-- Crear tabla Asignatura
 CREATE TABLE Asignatura (
-    AsignaturaID INT PRIMARY KEY,
+    AsignaturaID INT AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(50),
-    CursoID INT,
-    FOREIGN KEY (CursoID) REFERENCES Cursos(CursoID)
+    CursoID INT
 );
 
--- insertar asignaturas
-INSERT INTO Asignatura (AsignaturaID, Nombre, CursoID) VALUES
-    (1, 'Comunicación integral', 1),
-    (2, 'Formación Personal y social', 1),
-    (3, 'Integración y Comprensión con el Entorno', 1),
-    (4, 'Plan especifico', 1),
-    (5, 'Taller de Psicomotricidad', 1),
-    (6, 'Comunicación integral', 2),
-    (7, 'Formación Personal y social', 2),
-    (8, 'Integración y Comprensión con el Entorno', 2),
-    (9, 'Taller de Psicomotricidad', 2),
-    (10, 'Taller inglés', 2),
-    (11, 'Comunicación integral', 3),
-    (12, 'Formación Personal y social', 3),
-    (13, 'Integración y Comprensión con el Entorno', 3),
-    (14, 'Plan especifico', 3),
-    (15, 'Taller de Psicomotricidad', 3),
-    (16, 'Taller inglés', 3),
-    (17, 'Comunicación integral', 4),
-    (18, 'Formación Personal y social', 4),
-    (19, 'Integración y Comprensión con el Entorno', 4),
-    (20, 'Taller de Psicomotricidad', 4),
-    (21, 'Taller inglés', 4),
-    (22, 'Comunicación integral', 5),
-    (23, 'Formación Personal y social', 5),
-    (24, 'Integración y Comprensión con el Entorno', 5),
-    (25, 'Taller de Psicomotricidad', 5),
-    (26, 'Taller inglés', 5),
-    (27, 'Artes Visuales', 6),
-    (28, 'Ciencias Naturales', 6),
-    (29, 'Educación Física y salud', 6),
-    (30, 'Historia, Geografía y Ciencias Sociales', 6),
-    (31, 'Idioma Extranjero, Inglés', 6),
-    (32, 'Lenguaje y Comunicación', 6),
-    (33, 'Matemáticas', 6),
-    (34, 'Música', 6),
-    (35, 'Orientación', 6),
-    (36, 'Religión', 6),
-    (37, 'Tecnología', 6),
-    (38, 'Artes Visuales', 7),
-    (39, 'Ciencias Naturales', 7),
-    (40, 'Educación Física y salud', 7),
-    (41, 'Historia, Geografía y Ciencias Sociales', 7),
-    (42, 'Idioma Extranjero, Inglés', 7),
-    (43, 'Lenguaje y Comunicación', 7),
-    (44, 'Matemáticas', 7),
-    (45, 'Música', 7),
-    (46, 'Orientación', 7),
-    (47, 'Religión', 7),
-    (48, 'Tecnología', 7),
-    (49, 'Artes Visuales', 8),
-    (50, 'Ciencias Naturales', 8),
-    (51, 'Educación Física y salud', 8),
-    (52, 'Historia, Geografía y Ciencias Sociales', 8),
-    (53, 'Idioma Extranjero, Inglés', 8),
-    (54, 'Lenguaje y Comunicación', 8),
-    (55, 'Matemáticas', 8),
-    (56, 'Música', 8),
-    (57, 'Orientación', 8),
-    (58, 'Religión', 8),
-    (59, 'Taller', 8),
-    (60, 'Taller Lenguaje', 8),
-    (61, 'Taller Matemáticas', 8),
-    (62, 'Tecnología', 8);
+-- Insertar asignaturas
+INSERT INTO Asignatura (Nombre, CursoID) VALUES
+    ('Comunicación integral', 1),
+    ('Formación Personal y social', 1),
+    ('Integración y Comprensión con el Entorno', 1),
+    ('Plan especifico', 1),
+    ('Taller de Psicomotricidad', 1),
+    ('Comunicación integral', 2),
+    ('Formación Personal y social', 2),
+    ('Integración y Comprensión con el Entorno', 2),
+    ('Taller de Psicomotricidad', 2),
+    ('Taller inglés', 2),
+    ('Comunicación integral', 3),
+    ('Formación Personal y social', 3),
+    ('Integración y Comprensión con el Entorno', 3),
+    ('Plan especifico', 3),
+    ('Taller de Psicomotricidad', 3),
+    ('Taller inglés', 3),
+    ('Comunicación integral', 4),
+    ('Formación Personal y social', 4),
+    ('Integración y Comprensión con el Entorno', 4),
+    ('Taller de Psicomotricidad', 4),
+    ('Taller inglés', 4),
+    ('Comunicación integral', 5),
+    ('Formación Personal y social', 5),
+    ('Integración y Comprensión con el Entorno', 5),
+    ('Taller de Psicomotricidad', 5),
+    ('Taller inglés', 5),
+    ('Artes Visuales', 6),
+    ('Ciencias Naturales', 6),
+    ('Educación Física y salud', 6),
+    ('Historia, Geografía y Ciencias Sociales', 6),
+    ('Idioma Extranjero, Inglés', 6),
+    ('Lenguaje y Comunicación', 6),
+    ('Matemáticas', 6),
+    ('Música', 6),
+    ('Orientación', 6),
+    ('Religión', 6),
+    ('Tecnología', 6),
+    ('Artes Visuales', 7),
+    ('Ciencias Naturales', 7),
+    ('Educación Física y salud', 7),
+    ('Historia, Geografía y Ciencias Sociales', 7),
+    ('Idioma Extranjero, Inglés', 7),
+    ('Lenguaje y Comunicación', 7),
+    ('Matemáticas', 7),
+    ('Música', 7),
+    ('Orientación', 7),
+    ('Religión', 7),
+    ('Tecnología', 7),
+    ('Artes Visuales', 8),
+    ('Ciencias Naturales', 8),
+    ('Educación Física y salud', 8),
+    ('Historia, Geografía y Ciencias Sociales', 8),
+    ('Idioma Extranjero, Inglés', 8),
+    ('Lenguaje y Comunicación', 8),
+    ('Matemáticas', 8),
+    ('Música', 8),
+    ('Orientación', 8),
+    ('Religión', 8),
+    ('Taller', 8),
+    ('Taller Lenguaje', 8),
+    ('Taller Matemáticas', 8),
+    ('Tecnología', 8);
 
--- crear tabla Tipo_Cambio
+-- Crear tabla Tipo_Cambio
 CREATE TABLE Tipo_Cambio (
-    TipoCambioID INT PRIMARY KEY,
+    TipoCambioID INT AUTO_INCREMENT PRIMARY KEY,
     TipoCambio VARCHAR(50)
 );
 
--- insertar tipos de cambio posibles
-INSERT INTO Tipo_Cambio (TipoCambioID, TipoCambio) VALUES 
-    (1, 'Inserción'),
-    (2, 'Actualización'),
-    (3, 'Eliminación');
+-- Insertar tipos de cambio posibles
+INSERT INTO Tipo_Cambio (TipoCambio) VALUES 
+    ('Inserción'),
+    ('Actualización'),
+    ('Eliminación');
 
--- crear tabla Usuario con TipoUsuario y AsignaturaID (puede ser NULL)
+-- Crear tabla Usuario con TipoUsuario y AsignaturaID (puede ser NULL)
 CREATE TABLE Usuario (
-    UsuarioID INT PRIMARY KEY,
+    UsuarioID INT AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(50),
     Apellido VARCHAR(50),
     CorreoElectronico VARCHAR(100),
@@ -145,15 +143,15 @@ CREATE TABLE Usuario (
     FOREIGN KEY (AsignaturaID) REFERENCES Asignatura(AsignaturaID)
 );
 
--- insertar usuarios
-INSERT INTO Usuario (UsuarioID, Nombre, Apellido, CorreoElectronico, TipoUsuarioID, AsignaturaID) VALUES
-    (1, 'admin1', 'admin1', 'admin1@example.com', 1, 1),
-    (2, 'profe1', 'profe1', 'profe1@example.com', 1, 2),
-    (3, 'utp1', 'utp1', 'utp1@example.com', 2, 3);
+-- Insertar usuarios
+INSERT INTO Usuario (Nombre, Apellido, CorreoElectronico, TipoUsuarioID, AsignaturaID) VALUES
+    ('admin1', 'admin1', 'admin1@example.com', 1, 1),
+    ('profe1', 'profe1', 'profe1@example.com', 1, 2),
+    ('utp1', 'utp1', 'utp1@example.com', 2, 3);
 
--- crear tabla Material_Educativo
+-- Crear tabla Material_Educativo
 CREATE TABLE Material_Educativo (
-    MaterialID INT PRIMARY KEY,
+    MaterialID INT AUTO_INCREMENT PRIMARY KEY,
     TipoArchivo VARCHAR(50),
     NombreArchivo VARCHAR(255),
     ProfesorID INT,
@@ -170,16 +168,16 @@ CREATE TABLE Material_Educativo (
     FOREIGN KEY (NivelEducativoID) REFERENCES Nivel_Educativo(NivelEducativoID)
 );
 
--- insertar datos de prueba en la tabla Material_Educativo
-INSERT INTO Material_Educativo (MaterialID, TipoArchivo, NombreArchivo, ProfesorID, AsignaturaID, CursoID, NivelEducativoID, Estado, Visible, RutaGoogleDrive, FechaSubida)
+-- Insertar datos de prueba en la tabla Material_Educativo
+INSERT INTO Material_Educativo (TipoArchivo, NombreArchivo, ProfesorID, AsignaturaID, CursoID, NivelEducativoID, Estado, Visible, RutaGoogleDrive, FechaSubida)
 VALUES
-    (1, 'Guía', 'ruta_guia1.pdf', 1, 1, 1, 1, true, true, 'ruta_guia1.pdf', '2023-10-06'),
-    (2, 'Prueba', 'ruta_prueba1.pdf', 2, 2, 2, 2, true, true, 'ruta_prueba1.pdf', '2023-10-07'),
-    (3, 'Planificación', 'ruta_planificacion1.pdf', 3, 3, 3, 3, true, true, 'ruta_planificacion1.pdf', '2023-10-08');
+    ('Guía', 'ruta_guia1.pdf', 1, 1, 1, 1, true, true, 'ruta_guia1.pdf', '2023-10-06'),
+    ('Prueba', 'ruta_prueba1.pdf', 2, 2, 2, 2, true, true, 'ruta_prueba1.pdf', '2023-10-07'),
+    ('Planificación', 'ruta_planificacion1.pdf', 3, 3, 3, 3, true, true, 'ruta_planificacion1.pdf', '2023-10-08');
 
--- crear tabla Log para registro de cambios
+-- Crear tabla Log para registro de cambios
 CREATE TABLE Log (
-    LogID INT PRIMARY KEY,
+    LogID INT AUTO_INCREMENT PRIMARY KEY,
     UsuarioID INT,
     MaterialID INT,
     TipoCambioID INT,
@@ -189,9 +187,9 @@ CREATE TABLE Log (
     FOREIGN KEY (TipoCambioID) REFERENCES Tipo_Cambio(TipoCambioID)
 );
 
--- crear tabla Comentario
+-- Crear tabla Comentario
 CREATE TABLE Comentario (
-    ComentarioID INT PRIMARY KEY,
+    ComentarioID INT AUTO_INCREMENT PRIMARY KEY,
     MaterialID INT,
     UsuarioID INT,
     Comentario VARCHAR(255),
@@ -200,16 +198,16 @@ CREATE TABLE Comentario (
     FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID)
 );
 
--- insertar datos de prueba en la tabla Comentario
-INSERT INTO Comentario (ComentarioID, MaterialID, UsuarioID, Comentario, FechaComentario)
+-- Insertar datos de prueba en la tabla Comentario
+INSERT INTO Comentario (MaterialID, UsuarioID, Comentario, FechaComentario)
 VALUES
-    (1, 1, 1, 'Comentario 1', '2023-10-06'),
-    (2, 2, 2, 'Comentario 2', '2023-10-07'),
-    (3, 3, 3, 'Comentario 3', '2023-10-08');
+    (1, 1, 'Comentario 1', '2023-10-06'),
+    (2, 2, 'Comentario 2', '2023-10-07'),
+    (3, 3, 'Comentario 3', '2023-10-08');
 
--- crear tabla Respuesta
+-- Crear tabla Respuesta
 CREATE TABLE Respuesta (
-    RespuestaID INT PRIMARY KEY,
+    RespuestaID INT AUTO_INCREMENT PRIMARY KEY,
     ComentarioID INT,
     UsuarioID INT,
     Respuesta VARCHAR(255),
@@ -218,12 +216,13 @@ CREATE TABLE Respuesta (
     FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID)
 );
 
-    -- insertar datos de prueba en la tabla Respuesta
-INSERT INTO Respuesta (RespuestaID, ComentarioID, UsuarioID, Respuesta, FechaRespuesta)
+-- Insertar datos de prueba en la tabla Respuesta
+INSERT INTO Respuesta (ComentarioID, UsuarioID, Respuesta, FechaRespuesta)
 VALUES
-    (1, 1, 1, 'Respuesta 1', '2023-10-06'),
-    (2, 2, 2, 'Respuesta 2', '2023-10-07'),
-    (3, 3, 3, 'Respuesta 3', '2023-10-08');
+    (1, 1, 'Respuesta 1', '2023-10-06'),
+    (2, 2, 'Respuesta 2', '2023-10-07'),
+    (3, 3, 'Respuesta 3', '2023-10-08');
+
 
 
 
@@ -426,8 +425,5 @@ BEGIN
     END IF;
 END;
 //
-<<<<<<< HEAD
 DELIMITER ;
-=======
-DELIMITER ;
->>>>>>> b0422ce6131b195955b226acec222a871f54e54f
+

@@ -1,20 +1,16 @@
-@extends('layouts.app')
+@extends('layout.app')
 
 @section('content')
-<div class="container">
-    <h2>Eliminar Nivel Educativo</h2>
-    <form method="POST" action="{{ route('niveles.destroy', $nivel->id) }}">
-        @csrf
-        @method('DELETE') <!-- Agregamos esto para indicar que es una solicitud DELETE -->
-
-        <!-- Alerta personalizada de Bootstrap -->
+    <div class="container">
+        <h2>Eliminar Asignatura</h2>
         <div class="alert alert-danger">
-            <p class="alert-message">¿Estás seguro de que deseas eliminar este nivel educativo?</p>
+            ¿Estás seguro de eliminar la asignatura: {{ $asignatura->Nombre }}?
         </div>
-
-        <button type="submit" class="btn btn-danger user-delete-button">Eliminar</button>
-        <a href="{{ route('niveles.index') }}" class="btn btn-secondary">Cancelar</a>
-    </form>
-</div>
+        <form method="POST" action="{{ route('asignatura.destroy', ['id' => $asignatura->AsignaturaID]) }}">
+            @csrf
+            @method('DELETE')
+            <button type="button" class="btn btn-secondary" onclick="window.history.back();">Cancelar</button>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta asignatura?')">Sí, eliminar</button>
+        </form>
+    </div>
 @endsection
-

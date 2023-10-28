@@ -9,7 +9,7 @@ class TipoCambioSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('tipo_cambio')->insert([
+        DB::table('Tipo_Cambio')->insert([
             ['TipoCambioID' => 1, 'TipoCambio' => 'Inserción'],
             ['TipoCambioID' => 2, 'TipoCambio' => 'Actualización'],
             ['TipoCambioID' => 3, 'TipoCambio' => 'Eliminación'],

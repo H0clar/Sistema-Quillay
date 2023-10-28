@@ -9,10 +9,10 @@ class NivelEducativoSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('nivel_educativo')->insert([
-            ['NivelEducativoID' => 1, 'Nombre' => 'Nivel 1'],
-            ['NivelEducativoID' => 2, 'Nombre' => 'Nivel 2'],
-            ['NivelEducativoID' => 3, 'Nombre' => 'Nivel 3'],
+        DB::table('Nivel_Educativo')->insert([
+            ['NivelEducativoID' => 1, 'Nombre' => 'Nivel 1 EDUCACION ESPECIAL TRASTORNOS ESPECIFICOS DEL LENGUAJE', 'Abreviatura' => 'N1'],
+            ['NivelEducativoID' => 2, 'Nombre' => 'Nivel 2 EDUCACION PARVULARIA', 'Abreviatura' => 'N2'],
+            ['NivelEducativoID' => 3, 'Nombre' => 'Nivel 3 ENSEÑANZA BÁSICA', 'Abreviatura' => 'N3'],
         ]);
     }
 }

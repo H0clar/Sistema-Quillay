@@ -1,4 +1,4 @@
-@extends('layout.app')  {{-- Asegúrate de que esta línea refleje la ruta correcta a tu diseño principal --}}
+@extends('layout.app')
 
 @section('content')
 <div class="container">
@@ -10,36 +10,36 @@
                 <th>ID del Comentario</th>
                 <th>ID del Material Educativo</th>
                 <th>ID del Usuario</th>
-                <th>Comentario</th>
-                <th>Fecha de Comentario</th>
-                <th>Respuesta</th>
-                <th>Fecha de Respuesta</th>
+                <th>Comentario/Respuesta</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>Comentario 1</td>
-            <td>2021-01-01</td>
-            <td>Respuesta 1</td>
-            <td>2021-01-01</td>
-            <td>
-                <a href="{{ route('comentarios.edit', 1) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
-                <button class="btn btn-danger btn-sm user-delete" onclick="confirm('¿Estás seguro de eliminar este comentario?')">Eliminar</button>
-        </tbody>
-
-        <tbody>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>Comentario 1</td>
-            <td>2021-01-01</td>
-            <td>Respuesta 1</td>
-            <td>2021-01-01</td>
-            <td>
-                <a href="{{ route('comentarios.edit', 1) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
-                <button class="btn btn-danger btn-sm user-delete" onclick="confirm('¿Estás seguro de eliminar este comentario?')">Eliminar</button>
+            @foreach($comentarios as $comentario)
+                <tr>
+                    <td>{{ $comentario->ComentarioID }}</td>
+                    <td>{{ $comentario->MaterialID }}</td>
+                    <td>{{ $comentario->UsuarioID }}</td>
+                    <td>
+                        <strong>Comentario:</strong> {{ $comentario->Comentario }}<br>
+                        @if ($comentario->respuestas->count() > 0)
+                            <strong>Respuesta:</strong> {{ $comentario->respuestas[0]->Respuesta }}
+                        @else
+                            <em>Sin respuesta</em>
+                        @endif
+                    </td>
+                    <td>{{ $comentario->FechaComentario }}</td>
+                    <td>
+                        <a href="{{ route('comentarios.edit', $comentario->ComentarioID) }}" class="btn btn-primary btn-sm user-edit">Editar Comentario</a>
+                        <form action="{{ route('comentarios.destroy', $comentario->ComentarioID) }}" method="POST" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm user-delete" onclick="return confirm('¿Estás seguro de eliminar este comentario?')">Eliminar Comentario</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

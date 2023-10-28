@@ -9,9 +9,8 @@ class CreateTipoCambioTable extends Migration
     public function up()
     {
         Schema::create('tipo_cambio', function (Blueprint $table) {
-            $table->id('TipoCambioID');
+            $table->increments('TipoCambioID');
             $table->string('TipoCambio', 50);
-            // Puedes agregar otras columnas aquí si es necesario
             $table->timestamps();
         });
     }

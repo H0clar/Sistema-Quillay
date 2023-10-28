@@ -8,22 +8,22 @@ class CreateLogTable extends Migration
 {
     public function up()
     {
-        Schema::create('log', function (Blueprint $table) {
-            $table->id('LogID');
+        Schema::create('Log', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('UsuarioID');
             $table->unsignedBigInteger('MaterialID');
             $table->unsignedBigInteger('TipoCambioID');
             $table->date('FechaCambio');
-            $table->foreign('UsuarioID')->references('UsuarioID')->on('usuario');
-            $table->foreign('MaterialID')->references('MaterialID')->on('material_educativo');
-            $table->foreign('TipoCambioID')->references('TipoCambioID')->on('tipo_cambio');
-            // Puedes agregar otras columnas aquí si es necesario
             $table->timestamps();
+            
+            $table->foreign('UsuarioID')->references('UsuarioID')->on('Usuario');
+            $table->foreign('MaterialID')->references('MaterialID')->on('Material_Educativo');
+            $table->foreign('TipoCambioID')->references('TipoCambioID')->on('Tipo_Cambio');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('log');
+        Schema::dropIfExists('Log');
     }
 }
