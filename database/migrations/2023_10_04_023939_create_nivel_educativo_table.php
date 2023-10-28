@@ -10,9 +10,9 @@ class CreateNivelEducativoTable extends Migration
     {
         Schema::create('nivel_educativo', function (Blueprint $table) {
             $table->id('NivelEducativoID');
-            $table->string('Nombre', 50);
-            // Puedes agregar otras columnas aquí si es necesario
-            $table->timestamps();
+            $table->string('Nombre', 255);
+            $table->string('Abreviatura', 10);
+            $table->timestamps(); // Esto agrega las columnas created_at y updated_at para el registro de fechas de creación y actualización.
         });
     }
 
