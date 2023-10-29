@@ -5,7 +5,7 @@
         <h2>Niveles Educativos</h2>
         <a href="{{ route('niveles.create') }}" class="btn btn-primary">Crear Nuevo Nivel Educativo</a>
         <br><br>
-        @if (count($niveles) > 0)
+        @if ($niveles->count() > 0)
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>

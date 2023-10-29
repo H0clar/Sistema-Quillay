@@ -42,15 +42,15 @@ class ComentarioController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'contenido' => 'required|max:255',
+            'contenido_comentario' => 'required|max:255',
+            'contenido_respuesta' => 'required|max:255',
             'MaterialID' => 'required|exists:Material_Educativo,MaterialID',
         ]);
-
 
         $comentario = Comentario::find($id);
 
         if ($comentario) {
-            $comentario->Comentario = $request->input('contenido');
+            $comentario->Comentario = $request->input('contenido_comentario');
             $comentario->MaterialID = $request->input('MaterialID');
             $comentario->save();
 

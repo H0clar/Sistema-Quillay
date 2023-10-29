@@ -7,7 +7,7 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\NivelController;
 use App\Http\Controllers\AsignaturaController;
 use App\Http\Controllers\ComentarioController;
-use App\Http\Controllers\RespuestaController; // Agregamos el controlador de Respuestas
+use App\Http\Controllers\RespuestaController;
 use Illuminate\Support\Facades\Route;
 
 // Ruta para mostrar la página principal (el home)
@@ -33,9 +33,17 @@ Route::delete('/niveles/{id}', [NivelController::class, 'destroy'])->name('nivel
 // Rutas para la gestión de cursos
 Route::get('/cursos', [CursoController::class, 'index'])->name('cursos.index');
 Route::get('/cursos/create', [CursoController::class, 'create'])->name('cursos.create');
+Route::post('/cursos', [CursoController::class, 'store'])->name('cursos.store');
 Route::get('/cursos/{id}/edit', [CursoController::class, 'edit'])->name('cursos.edit');
-Route::put('/cursos/{id}', [CursoController::class, 'update'])->name('cursos.update');
 Route::delete('/cursos/{id}', [CursoController::class, 'destroy'])->name('cursos.destroy');
+Route::put('/cursos/{id}', [CursoController::class, 'update'])->name('cursos.update');
+
+
+
+
+
+
+
 
 // Rutas para la gestión de asignaturas
 Route::get('/asignaturas', [AsignaturaController::class, 'index'])->name('asignaturas.index');
@@ -52,13 +60,6 @@ Route::get('/materiales/{id}/edit', [MaterialController::class, 'edit'])->name('
 Route::put('/materiales/{id}', [MaterialController::class, 'update'])->name('materiales.update');
 Route::delete('/materiales/{id}', [MaterialController::class, 'destroy'])->name('materiales.destroy');
 
-// Rutas para la gestión de cambios
-Route::get('/cambios', [CambioController::class, 'index'])->name('cambios.index');
-Route::get('/cambios/create', [CambioController::class, 'create'])->name('cambios.create');
-Route::get('/cambios/{id}/edit', [CambioController::class, 'edit'])->name('cambios.edit');
-Route::put('/cambios/{id}', [CambioController::class, 'update'])->name('cambios.update');
-Route::delete('/cambios/{id}', [CambioController::class, 'destroy'])->name('cambios.destroy');
-
 // Rutas para la gestión de comentarios y respuestas en la misma vista
 Route::get('/comentarios', [ComentarioController::class, 'index'])->name('comentarios.index');
 Route::get('/comentarios/create', [ComentarioController::class, 'create'])->name('comentarios.create');
@@ -73,6 +74,15 @@ Route::post('/respuestas', [RespuestaController::class, 'store'])->name('respues
 Route::get('/respuestas/{id}/edit', [RespuestaController::class, 'edit'])->name('respuestas.edit');
 Route::put('/respuestas/{id}', [RespuestaController::class, 'update'])->name('respuestas.update');
 Route::delete('/respuestas/{id}', [RespuestaController::class, 'destroy'])->name('respuestas.destroy');
+
+//Rutas para la gestion de cambios
+Route::get('/cambios', [CambioController::class, 'index'])->name('cambios.index');
+Route::get('/cambios/create', [CambioController::class, 'create'])->name('cambios.create');
+Route::post('/cambios', [CambioController::class, 'store'])->name('cambios.store');
+Route::get('/cambios/{id}/edit', [CambioController::class, 'edit'])->name('cambios.edit');
+Route::put('/cambios/{id}', [CambioController::class, 'update'])->name('cambios.update');
+Route::delete('/cambios/{id}', [CambioController::class, 'destroy'])->name('cambios.destroy');
+
 
 // Rutas para la gestión de notificaciones
 Route::get('/notificaciones', [NotificacionesController::class, 'index'])->name('notificaciones.index');

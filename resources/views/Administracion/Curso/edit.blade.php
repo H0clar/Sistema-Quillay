@@ -2,34 +2,29 @@
 
 @section('content')
 <div class="container">
-    <h2 class="course-form-title">Editar Curso</h2>
-    <form method="POST" action="{{ route('cursos.update', $id) }}" class="user-form">
+    <h2>Editar Curso</h2>
+    <form action="{{ route('cursos.update', ['id' => $curso->CursoID]) }}" method="POST">
         @csrf
         @method('PUT')
 
         <div class="form-group">
-            <label for="nombre">Nombre del Curso</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" placeholder="Ingrese el nombre del curso" required>
+            <label for="Nombre">Nombre</label>
+            <input type="text" name="Nombre" id="Nombre" class="form-control" value="{{ $curso->Nombre }}">
         </div>
 
         <div class="form-group">
-            <label for="abreviatura">Abreviatura</label>
-            <input type="text" class="form-control" id="abreviatura" name="abreviatura" value="{{ old('abreviatura') }}" placeholder="Ingrese la abreviatura" required>
+            <label for="NivelEducativoID">Nivel Educativo ID</label>
+            <input type="text" name="NivelEducativoID" id="NivelEducativoID" class="form-control" value="{{ $curso->NivelEducativoID }}">
         </div>
 
         <div class="form-group">
-            <label for="nivel_educativo">Nivel Educativo</label>
-            <select class="form-control" id="nivel_educativo" name="nivel_educativo" required>
-                <option value="1" {{ old('nivel_educativo') == 1 ? 'selected' : '' }}>Nivel 1</option>
-                <option value="2" {{ old('nivel_educativo') == 2 ? 'selected' : '' }}>Nivel 2</option>
-                <!-- Agrega más opciones de niveles educativos según tu base de datos -->
-            </select>
+            <label for="Abreviatura">Abreviatura</label>
+            <input type="text" name="Abreviatura" id="Abreviatura" class "form-control" value="{{ $curso->Abreviatura }}">
         </div>
 
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary user-form-button">Actualizar</button>
-            <a href="{{ route('cursos.index') }}" class="btn btn-secondary user-form-button cancel">Cancelar</a>
-        </div>
+        <!-- Agrega aquí más campos del formulario según tus necesidades -->
+
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
     </form>
 </div>
 @endsection

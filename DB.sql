@@ -431,3 +431,63 @@ DELIMITER ;
 =======
 DELIMITER ;
 >>>>>>> b0422ce6131b195955b226acec222a871f54e54f
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Crear tabla Material_Educativo
+    --CREATE TABLE Material_Educativo (
+    --MaterialID INT AUTO_INCREMENT PRIMARY KEY,
+    --TipoArchivo VARCHAR(50),
+    --NombreArchivo VARCHAR(255),
+    --ProfesorID INT,
+    --AsignaturaID INT,
+    --CursoID INT,
+    --NivelEducativoID INT,
+    --Estado BOOLEAN,
+    --Visible BOOLEAN,
+    --RutaGoogleDrive VARCHAR(255),
+    --FechaSubida DATE,
+    --FOREIGN KEY (ProfesorID) REFERENCES Usuario(UsuarioID),
+    --FOREIGN KEY (AsignaturaID) REFERENCES Asignatura(AsignaturaID),
+    --FOREIGN KEY (CursoID) REFERENCES Cursos(CursoID),
+    --FOREIGN KEY (NivelEducativoID) REFERENCES Nivel_Educativo(NivelEducativoID)
+    --);
+
+
+
+
+
+
+    CREATE TABLE Comentario (
+    ComentarioID INT AUTO_INCREMENT PRIMARY KEY,
+    MaterialID INT,
+    UsuarioID INT,
+    Comentario VARCHAR(255),
+    FechaComentario DATE,
+    FOREIGN KEY (MaterialID) REFERENCES Material_Educativo(MaterialID),
+    FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID)
+);
+
+
+
+
+
+CREATE TABLE Respuesta (
+    RespuestaID INT AUTO_INCREMENT PRIMARY KEY,
+    ComentarioID INT,
+    UsuarioID INT,
+    Respuesta VARCHAR(255),
+    FechaRespuesta DATE,
+    FOREIGN KEY (ComentarioID) REFERENCES Comentario(ComentarioID),
+    FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID)
+);
