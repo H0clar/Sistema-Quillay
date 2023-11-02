@@ -8,7 +8,7 @@ class Asignatura extends Model
 {
     protected $table = 'Asignatura';
     protected $primaryKey = 'AsignaturaID';
-    public $timestamps = false; // Agrega esta línea
+    public $timestamps = false;
 
     protected $fillable = ['Nombre', 'CursoID', 'Descripcion'];
 
@@ -26,6 +26,4 @@ class Asignatura extends Model
     {
         return $this->belongsToMany(Estudiante::class, 'estudiante_asignatura', 'AsignaturaID', 'EstudianteID');
     }
-
-    // Más relaciones y métodos aquí
 }

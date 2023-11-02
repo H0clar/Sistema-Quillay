@@ -4,7 +4,7 @@
 <div class="container">
     <h2 class="log-list-title">Editar Comentario o Respuesta</h2>
 
-    <form action="{{ route('comentarios.update', $comentario->ComentarioID) }}" method="POST">
+    <form action="{{ route('comentarios.update', $comentario->ComentarioID) }}" method="POST" class="user-form">
         @csrf
         @method('PUT')
 
@@ -23,7 +23,8 @@
             <input type="text" name="MaterialID" class="form-control" id="MaterialID" value="{{ $comentario->MaterialID }}">
         </div>
 
-        <button type="submit" class="btn btn-primary">Actualizar Comentario y/o Respuesta</button>
+        <button type="submit" class="btn btn-primary user-form-button">Actualizar Comentario y/o Respuesta</button>
+        <a href="{{ route('comentarios.index') }}" class="btn btn-secondary user-form-button cancel">Cancelar</a>
     </form>
 </div>
 @endsection

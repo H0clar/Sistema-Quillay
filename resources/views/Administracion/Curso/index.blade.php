@@ -2,43 +2,52 @@
 
 @section('content')
     <div class="container">
-        <h2>Cursos</h2>
-        <a href="{{ route('cursos.create') }}" class="btn btn-primary">Crear Nuevo Curso</a>
+        <h2 class="user-list-title">Cursos</h2>
+        <a href="{{ route('cursos.create') }}" class="btn btn-primary add-user-button">Crear Nuevo Curso</a>
         <br><br>
-        @if (count($cursos) > 0)
-            <table class="table table-bordered table-hover">
-                <thead>
+
+        <!-- Contenedor para el formulario de filtrado con margen inferior -->
+        <div class="user-filter-container mb-3">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="nombre" class="user-filter-label">Buscar por Nombre:</label>
+                    <input type="text" name="nombre" id="nombre" class="form-control user-filter-input">
+                    <button type="submit" class="btn user-filter-button">Buscar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agrega un margen superior a la tabla -->
+        <table class="table user-table mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Nivel Educativo ID</th>
+                    <th>Abreviatura</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($cursos as $curso)
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Nivel Educativo ID</th>
-                        <th>Abreviatura</th>
-                        <th>Acciones</th>
+                        <td>{{ $curso->CursoID }}</td>
+                        <td>{{ $curso->Nombre }}</td>
+                        <td>{{ $curso->NivelEducativoID }}</td>
+                        <td>{{ $curso->Abreviatura }}</td>
+                        <td>
+                            <a href="{{ route('cursos.edit', ['id' => $curso->CursoID]) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
+                            
+                            <!-- Agrega el botón para eliminar utilizando un formulario -->
+                            <form action="{{ route('cursos.destroy', ['id' => $curso->CursoID]) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm user-delete" onclick="return confirm('¿Estás seguro de eliminar este curso?')">Eliminar</button>
+                            </form>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($cursos as $curso)
-                        <tr>
-                            <td>{{ $curso->CursoID }}</td>
-                            <td>{{ $curso->Nombre }}</td>
-                            <td>{{ $curso->NivelEducativoID }}</td>
-                            <td>{{ $curso->Abreviatura }}</td>
-                            <td>
-                                <a href="{{ route('cursos.edit', ['id' => $curso->CursoID]) }}" class="btn btn-primary btn-sm">Editar</a>
-                                
-                                <!-- Agrega el botón para eliminar utilizando un formulario -->
-                                <form action="{{ route('cursos.destroy', ['id' => $curso->CursoID]) }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este curso?')">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @else
-            <p>No hay cursos disponibles.</p>
-        @endif
+                @endforeach
+            </tbody>
+        </table>
     </div>
 @endsection

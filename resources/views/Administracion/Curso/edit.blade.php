@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <h2>Editar Curso</h2>
-    <form action="{{ route('cursos.update', ['id' => $curso->CursoID]) }}" method="POST">
+    <h2 class="user-form-title">Editar Curso</h2>
+    <form action="{{ route('cursos.update', ['id' => $curso->CursoID]) }}" method="POST" class="user-form">
         @csrf
         @method('PUT')
 
@@ -19,12 +19,15 @@
 
         <div class="form-group">
             <label for="Abreviatura">Abreviatura</label>
-            <input type="text" name="Abreviatura" id="Abreviatura" class "form-control" value="{{ $curso->Abreviatura }}">
+            <input type="text" name="Abreviatura" id="Abreviatura" class="form-control" value="{{ $curso->Abreviatura }}">
         </div>
 
         <!-- Agrega aquí más campos del formulario según tus necesidades -->
 
-        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary user-form-button">Guardar Cambios</button>
+            <a href="{{ route('cursos.index') }}" class="btn btn-secondary user-form-button cancel">Cancelar</a>
+        </div>
     </form>
 </div>
 @endsection

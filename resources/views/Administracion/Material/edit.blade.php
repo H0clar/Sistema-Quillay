@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2 class="material-form-title">Editar Material Educativo</h2>
-    <form method="POST" action="{{ route('materiales.update', $id) }}" class="user-form">
+    <form method="POST" action="{{ route('Administracion.material.edit', $material->MaterialID) }}" class="user-form">
         @csrf
         @method('PUT')
 

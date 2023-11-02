@@ -12,46 +12,33 @@ class MaterialEducativo extends Model
 
     protected $fillable = [
         'TipoArchivo',
-        'NombreArchivo',
-        'ProfesorID',
+        'UsuarioID',
         'AsignaturaID',
         'CursoID',
         'NivelEducativoID',
         'Estado',
         'Visible',
         'RutaGoogleDrive',
-        'FechaSubida'
+        'FechaSubida',
     ];
-
-    // Define las relaciones aquí si es necesario
 
     public function profesor()
     {
-        return $this->belongsTo(Usuario::class, 'ProfesorID');
+        return $this->belongsTo(Usuario::class, 'UsuarioID', 'UsuarioID');
     }
 
     public function asignatura()
     {
-        return $this->belongsTo(Asignatura::class, 'AsignaturaID');
+        return $this->belongsTo(Asignatura::class, 'AsignaturaID', 'AsignaturaID');
     }
 
     public function curso()
     {
-        return $this->belongsTo(Cursos::class, 'CursoID');
+        return $this->belongsTo(Curso::class, 'CursoID', 'CursoID');
     }
 
     public function nivelEducativo()
     {
-        return $this->belongsTo(NivelEducativo::class, 'NivelEducativoID');
-    }
-
-    public function log()
-    {
-        return $this->hasMany(Log::class, 'MaterialID');
-    }
-
-    public function comentarios()
-    {
-        return $this->hasMany(Comentario::class, 'MaterialID');
+        return $this->belongsTo(NivelEducativo::class, 'NivelEducativoID', 'NivelEducativoID');
     }
 }

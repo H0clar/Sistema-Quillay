@@ -56,9 +56,14 @@ Route::delete('/asignaturas/{id}', [AsignaturaController::class, 'destroy'])->na
 // Rutas para la gestión de materiales
 Route::get('/materiales', [MaterialController::class, 'index'])->name('materiales.index');
 Route::get('/materiales/create', [MaterialController::class, 'create'])->name('materiales.create');
+Route::post('/materiales', [MaterialController::class, 'store'])->name('materiales.store');
 Route::get('/materiales/{id}/edit', [MaterialController::class, 'edit'])->name('materiales.edit');
 Route::put('/materiales/{id}', [MaterialController::class, 'update'])->name('materiales.update');
 Route::delete('/materiales/{id}', [MaterialController::class, 'destroy'])->name('materiales.destroy');
+
+
+
+
 
 // Rutas para la gestión de comentarios y respuestas en la misma vista
 Route::get('/comentarios', [ComentarioController::class, 'index'])->name('comentarios.index');

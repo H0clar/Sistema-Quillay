@@ -2,13 +2,13 @@
 
 @section('content')
     <div class="container">
-        <h2>Crear Nueva Asignatura</h2>
-        <form method="POST" action="{{ route('asignaturas.store') }}">
+        <h2 class="user-form-title">Crear Nueva Asignatura</h2>
+        <form method="POST" action="{{ route('asignaturas.store') }}" class="user-form">
             @csrf
 
             <div class="form-group">
                 <label for="nombre">Nombre de la Asignatura</label>
-                <input type="text" name="nombre" id="nombre" class="form-control" required>
+                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese el nombre de la asignatura" required>
             </div>
 
             <div class="form-group">
@@ -21,9 +21,8 @@
                 </select>
             </div>
 
-            <!-- Agrega otros campos del formulario si es necesario -->
-
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary user-form-button">Guardar</button>
+            <a href="{{ route('asignaturas.index') }}" class="btn btn-secondary user-form-button cancel">Cancelar</a>
         </form>
     </div>
 @endsection

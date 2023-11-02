@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h2>Asignaturas</h2>
-        <a href="{{ route('asignaturas.create') }}" class="btn btn-primary">Crear Nueva Asignatura</a>
+        <a href="{{ route('asignaturas.create') }}" class="btn btn-primary user-edit">Crear Nueva Asignatura</a>
         <br><br>
         @if (count($asignaturas) > 0)
         <table class="table table-bordered table-hover">
@@ -24,7 +24,7 @@
                             <form action="{{ route('asignaturas.destroy', ['id' => $asignatura->AsignaturaID]) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta asignatura?')">Eliminar</button>
+                                <button type="submit" class="btn btn-danger btn-sm user-delete" onclick="return confirm('¿Estás seguro de eliminar esta asignatura?')">Eliminar</button>
                             </form>
                         </td>
                     </tr>
