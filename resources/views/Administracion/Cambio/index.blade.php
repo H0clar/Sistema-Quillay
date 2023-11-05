@@ -65,34 +65,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>
-                    <a href="{{ route('cambios.edit', 1) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
-                    <button class="btn btn-danger btn-sm user-delete" onclick="confirm('¿Estás seguro de eliminar este registro de cambio?')">Eliminar</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>
-                    <a href="{{ route('cambios.edit', 2) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
-                    <button class="btn btn-danger btn-sm user-delete" onclick="confirm('¿Estás seguro de eliminar este registro de cambio?')">Eliminar</button>
-                </td>
-            </tr>
+            @foreach($registrosCambio as $log)
+                <tr>
+                    <td>{{ $log->usuario->Nombre }} {{ $log->usuario->Apellido }}</td> <!-- Muestra el nombre y apellido del usuario -->
+                    <td>{{ $log->material->NombreArchivo }} ({{ $log->material->TipoArchivo }})</td> <!-- Muestra el nombre del material educativo y su tipo -->
+                    <td>{{ $log->tipoCambio->TipoCambio }}</td> <!-- Muestra el tipo de cambio -->
+                    <td>{{ $log->FechaCambio }}</td> <!-- Muestra la FechaCambio del registro de log -->
 
-            <tr>
-                <td>Segundo nivel de transición</td>
-                <td>NT2</td>
-                <td>1</td>
-                <td>
-                    <a href="{{ route('cursos.edit', 3) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
-                    <button class="btn btn-danger btn-sm user-delete" onclick="confirm('¿Estás seguro de eliminar este registro de cambio?')">Eliminar</button>
-                </td>
-            </tr>
+                    <td>
+                        <a href="{{ route('cambios.edit', $log->LogID) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
+                        <button class="btn btn-danger btn-sm user-delete" onclick="confirm('¿Estás seguro de eliminar este registro de cambio?')">Eliminar</button>
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

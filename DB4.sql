@@ -154,7 +154,6 @@ CREATE TABLE Material_Educativo (
     CursoID INT,
     NivelEducativoID INT,
     Estado BOOLEAN,
-    Visible BOOLEAN,
     RutaGoogleDrive VARCHAR(255),
     FechaSubida DATE,
     FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID),
@@ -163,12 +162,15 @@ CREATE TABLE Material_Educativo (
     FOREIGN KEY (NivelEducativoID) REFERENCES Nivel_Educativo(NivelEducativoID) ON DELETE CASCADE
 );
 
+
 -- Insertar datos de prueba en la tabla Material_Educativo
-INSERT INTO Material_Educativo (TipoArchivo, NombreArchivo, UsuarioID, AsignaturaID, CursoID, NivelEducativoID, Estado, Visible, RutaGoogleDrive, FechaSubida)
-VALUES
-    ('Guía', 'ruta_guia1.pdf', 1, 1, 1, 1, true, true, 'ruta_guia1.pdf', '2023-10-06'),
-    ('Prueba', 'ruta_prueba1.pdf', 2, 2, 2, 2, true, true, 'ruta_prueba1.pdf', '2023-10-07'),
-    ('Planificación', 'ruta_planificacion1.pdf', 3, 3, 3, 3, true, true, 'ruta_planificacion1.pdf', '2023-10-08');
+INSERT INTO Material_Educativo (TipoArchivo, NombreArchivo, UsuarioID, AsignaturaID, CursoID, NivelEducativoID, Estado, RutaGoogleDrive, FechaSubida) VALUES 
+    ('pdf', 'N1_MM_Comunicación integral_pdf_1.pdf', 1, 1, 1, 1, TRUE, 'ASDAS', '2023-10-06'),
+    ('pdf', 'N1_MM_Comunicación integral_pdf_2.pdf', 2, 1, 1, 1, TRUE, 'ASDAS', '2023-10-07'),
+    ('pdf', 'N1_MM_Comunicación integral_pdf_3.pdf', 3, 1, 1, 1, TRUE, 'ASDAS', '2023-10-08');
+
+
+    
 
 -- Crear tabla Log para registro de cambios
 CREATE TABLE Log (
@@ -181,6 +183,7 @@ CREATE TABLE Log (
     FOREIGN KEY (MaterialID) REFERENCES Material_Educativo(MaterialID),
     FOREIGN KEY (TipoCambioID) REFERENCES Tipo_Cambio(TipoCambioID)
 );
+
 
 -- Crear tabla Comentario
 CREATE TABLE Comentario (
@@ -228,6 +231,7 @@ VALUES
 
 
 
+-- Crear el desencadenador (trigger) para Material_Educativo
 DELIMITER //
 CREATE TRIGGER Material_Educativo_BI BEFORE INSERT ON Material_Educativo FOR EACH ROW
 BEGIN
@@ -248,7 +252,9 @@ BEGIN
     WHERE C.CursoID = NEW.CursoID;
     
     -- obtener el nombre de la asignatura
-    SELECT Nombre INTO AsignaturaNombre FROM Asignatura WHERE AsignaturaID = NEW.AsignaturaID;
+    SELECT REPLACE(COALESCE(Nombre, ''), ' ', '.') INTO AsignaturaNombre
+    FROM Asignatura
+    WHERE AsignaturaID = NEW.AsignaturaID;
     
     -- obtener la fecha del archivo
     SET FechaArchivo = NEW.FechaSubida;
@@ -265,9 +271,43 @@ BEGIN
     
     -- Establecer el nombre del archivo
     SET NEW.NombreArchivo = CONCAT(NivelAbreviatura, '_', CursoAbreviatura, '_', AsignaturaNombre, '_', TipoArchivo, '_', CantidadArchivosMismoDia + 1, '.pdf');
-    
-    -- Establecer la visibilidad inicial en verdadero
-    SET NEW.Visible = TRUE;
 END;
 //
 DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+ --trigger material educattivo log--
+
+ DELIMITER //
+CREATE TRIGGER Material_Educativo_AI AFTER INSERT ON Material_Educativo FOR EACH ROW
+BEGIN
+    -- Registro de inserción en la tabla Log
+    INSERT INTO Log (UsuarioID, MaterialID, TipoCambioID, FechaCambio)
+    VALUES (NEW.UsuarioID, NEW.MaterialID, 1, CURDATE());
+END;
+//
+CREATE TRIGGER Material_Educativo_AU AFTER UPDATE ON Material_Educativo FOR EACH ROW
+BEGIN
+    -- Registro de actualización en la tabla Log
+    INSERT INTO Log (UsuarioID, MaterialID, TipoCambioID, FechaCambio)
+    VALUES (NEW.UsuarioID, NEW.MaterialID, 2, CURDATE());
+END;
+//
+CREATE TRIGGER Material_Educativo_AD AFTER DELETE ON Material_Educativo FOR EACH ROW
+BEGIN
+    -- Registro de eliminación en la tabla Log
+    INSERT INTO Log (UsuarioID, MaterialID, TipoCambioID, FechaCambio)
+    VALUES (OLD.UsuarioID, OLD.MaterialID, 3, CURDATE());
+END;
+//
+DELIMITER ;
+
+

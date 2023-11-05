@@ -2,27 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use Illuminate\Http\Request;
 
 class CambioController extends Controller
 {
     public function index()
     {
-        return view('Administracion.cambio.index');
+        // Recupera los registros de cambio con las relaciones definidas (usuario, material, tipoCambio)
+        $registrosCambio = Log::with(['usuario', 'material', 'tipoCambio'])->get();
+
+        return view('Administracion.cambio.index', compact('registrosCambio'));
     }
 
     public function create()
     {
-        return view('Administracion.cambio.create');
+        // Aquí podrías agregar lógica para crear nuevos registros de cambio si es aplicable
     }
 
     public function edit($id)
     {
-        return view('Administracion.cambio.edit', ['id' => $id]);
+        // Esto dependerá de cómo planeas permitir la edición de registros de cambio (si es necesario)
     }
 
     public function destroy($id)
     {
-        return view('Administracion.cambio.delete', ['id' => $id]);
+        $registroCambio = Log::find($id);
+
+        if ($registroCambio) {
+            $registroCambio->delete();
+            return redirect()->route('cambios.index')->with('success', 'Registro de cambio eliminado correctamente.');
+        } else {
+            return redirect()->route('cambios.index')->with('error', 'No se pudo encontrar el registro de cambio a eliminar.');
+        }
     }
 }

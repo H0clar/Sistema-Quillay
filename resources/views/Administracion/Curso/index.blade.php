@@ -23,7 +23,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Nivel Educativo ID</th>
+                    <th>Nivel Educativo</th> <!-- Cambia a "Nivel Educativo" -->
                     <th>Abreviatura</th>
                     <th>Acciones</th>
                 </tr>
@@ -33,7 +33,7 @@
                     <tr>
                         <td>{{ $curso->CursoID }}</td>
                         <td>{{ $curso->Nombre }}</td>
-                        <td>{{ $curso->NivelEducativoID }}</td>
+                        <td>{{ $curso->nivelEducativo->Nombre }} ({{ $curso->nivelEducativo->Abreviatura }})</td> <!-- Muestra el nombre y abreviatura del nivel educativo -->
                         <td>{{ $curso->Abreviatura }}</td>
                         <td>
                             <a href="{{ route('cursos.edit', ['id' => $curso->CursoID]) }}" class="btn btn-primary btn-sm user-edit">Editar</a>

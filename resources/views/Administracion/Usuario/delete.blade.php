@@ -2,18 +2,15 @@
 
 @section('content')
 <div class="container">
-    <h2>Eliminar Usuario</h2>
-    <form method="POST" action="{{ route('usuarios.destroy', $usuario->id) }}">
+    <h2 class="user-form-title">Eliminar Usuario</h2>
+    <p>¿Estás seguro de eliminar este usuario?</p>
+    
+    <form method="POST" action="{{ route('usuarios.destroy', $usuario->UsuarioID) }}" class="user-form">
         @csrf
-        @method('DELETE') <!-- Agregamos esto para indicar que es una solicitud DELETE -->
+        @method('DELETE')
 
-        <!-- Alerta personalizada de Bootstrap -->
-        <div class="alert alert-danger">
-            <p class="alert-message">¿Estás seguro de que deseas eliminar este usuario?</p>
-        </div>
-
-        <button type="submit" class="btn btn-danger user-delete-button">Eliminar</button>
-        <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-danger user-form-button">Eliminar</button>
+        <a href="{{ route('usuarios.index') }}" class="btn btn-secondary user-form-button">Cancelar</a>
     </form>
 </div>
 @endsection

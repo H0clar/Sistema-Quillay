@@ -21,53 +21,61 @@
     <table class="table user-table mt-3">
         <thead>
             <tr>
-                <th>Nombre del Archivo</th>
+                <th>MaterialID</th>
+                <th>Tipo de Archivo</th>
+                <th>Nombre de Archivo</th>
+                <th>Usuario</th>
                 <th>Asignatura</th>
                 <th>Curso</th>
                 <th>Nivel Educativo</th>
-                <th>Profesor</th>
                 <th>Estado</th>
+                <th>Ruta Google Drive</th>
                 <th>Fecha de Subida</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             @foreach($materiales as $material)
-            <tr>
-                <td>{{ $material->NombreArchivo }}</td>
-                <td>{{ $material->asignatura->Nombre }}</td>
-                <td>
-                    @if ($material->curso)
-                        {{ $material->curso->NombreCurso }}
-                    @else
-                        N/A
-                    @endif
-                </td>
-                <td>
-                    @if ($material->nivelEducativo)
-                        {{ $material->nivelEducativo->NombreNivel }}
-                    @else
-                        N/A
-                    @endif
-                </td>
-                <td>
-                    @if ($material->usuario)
-                        {{ $material->usuario->Nombre }}
-                    @else
-                        N/A
-                    @endif
-                </td>
-                <td>{{ $material->Estado }}</td>
-                <td>{{ $material->FechaSubida }}</td>
-                <td>
-                    <a href="{{ route('materiales.edit', $material->MaterialID) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
-                    <form action="{{ route('materiales.destroy', $material->MaterialID) }}" method="POST" style="display: inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-sm user-delete" onclick="return confirm('¿Estás seguro de eliminar este material educativo?')">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
+                <tr>
+                    <td>{{ $material->MaterialID }}</td>
+                    <td>{{ $material->TipoArchivo }}</td>
+                    <td>{{ $material->NombreArchivo }}</td>
+                    <td>
+                        @if ($material->usuario)
+                            {{ $material->usuario->Nombre }} {{ $material->usuario->Apellido }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                    <td>
+                        @if ($material->asignatura)
+                            {{ $material->asignatura->Nombre }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                    <td>
+                        @if ($material->curso)
+                            {{ $material->curso->Nombre }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                    <td>
+                        @if ($material->nivelEducativo)
+                            {{ $material->nivelEducativo->Nombre }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                    <td>{{ $material->Estado }}</td>
+                    <td>{{ $material->RutaGoogleDrive }}</td>
+                    <td>{{ $material->FechaSubida }}</td>
+                    <td>
+                        <a href="{{ route('materiales.edit', $material->MaterialID) }}" class="btn btn-primary btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>

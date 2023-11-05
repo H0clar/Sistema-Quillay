@@ -3,37 +3,46 @@
 @section('content')
 <div class="container">
     <h2 class="user-form-title">Editar Usuario</h2>
-    <form method="POST" action="{{ route('usuarios.update', $id) }}" class="user-form">
+
+    <form method="POST" action="{{ route('usuarios.update', $usuario->UsuarioID) }}" class="user-form">
         @csrf
         @method('PUT')
 
         <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" placeholder="Ingrese su nombre" required>
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $usuario->Nombre }}" required>
+        </div>
+
+        <div class "form-group">
+            <label for="apellido">Apellido:</label>
+            <input type="text" name="apellido" id="apellido" class="form-control" value="{{ $usuario->Apellido }}" required>
         </div>
 
         <div class="form-group">
-            <label for="apellido">Apellido</label>
-            <input type="text" class="form-control" id="apellido" name="apellido" value="{{ old('apellido') }}" placeholder="Ingrese su apellido" required>
+            <label for="correo_electronico">Correo Electrónico:</label>
+            <input type="email" name="correo_electronico" id="correo_electronico" class="form-control" value="{{ $usuario->CorreoElectronico }}" required>
         </div>
 
         <div class="form-group">
-            <label for="correo">Correo Electrónico</label>
-            <input type="email" class="form-control" id="correo" name="correo" value="{{ old('correo') }}" placeholder="Ingrese su correo electrónico" required>
-        </div>
-
-        <div class="form-group">
-            <label for="rol">Rol</label>
-            <select class="form-control" id="rol" name="rol" required>
-                <option value="Usuario" @if (old('rol') === 'Usuario') selected @endif>Usuario</option>
-                <option value="Administrador" @if (old('rol') === 'Administrador') selected @endif>Administrador</option>
+            <label for="tipo_usuario_id">Rol:</label>
+            <select name="tipo_usuario_id" id="tipo_usuario_id" class="form-control" required>
+                @foreach($tiposUsuario as $tipo)
+                    <option value="{{ $tipo->TipoUsuarioID }}" @if($usuario->TipoUsuarioID === $tipo->TipoUsuarioID) selected @endif>{{ $tipo->Tipo }}</option>
+                @endforeach
             </select>
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary user-form-button">Actualizar</button>
-            <a href="{{ route('usuarios.index') }}" class="btn btn-secondary user-form-button cancel">Cancelar</a>
+            <label for="asignatura_id">Asignatura:</label>
+            <select name="asignatura_id" id="asignatura_id" class="form-control">
+                <option value="">Seleccionar Asignatura</option>
+                @foreach($asignaturas as $asignatura)
+                    <option value="{{ $asignatura->AsignaturaID }}" @if($usuario->AsignaturaID === $asignatura->AsignaturaID) selected @endif>{{ $asignatura->Nombre }}</option>
+                @endforeach
+            </select>
         </div>
+
+        <button type="submit" class="btn btn-primary user-form-button">Actualizar Usuario</button>
     </form>
 </div>
 @endsection

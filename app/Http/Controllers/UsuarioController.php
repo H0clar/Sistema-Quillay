@@ -2,39 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Usuario; // Importa el modelo Usuario
+use App\Models\Usuario;
+use App\Models\TipoUsuario;
+use App\Models\Asignatura;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
     public function index()
     {
-        // Obtén la lista de usuarios y pasa a la vista
-        $usuarios = Usuario::all();
+        $usuarios = Usuario::with('tipoUsuario', 'asignatura')->get(); // Cargar relaciones TipoUsuario y Asignatura
         return view('Administracion.Usuario.index', compact('usuarios'));
     }
 
+
     public function create()
     {
-        // Puedes crear un nuevo usuario, por ejemplo, mostrar un formulario vacío
-        return view('Administracion.Usuario.create');
+        $tiposUsuario = TipoUsuario::all();
+        $asignaturas = Asignatura::all();
+
+        return view('Administracion.Usuario.create', compact('tiposUsuario', 'asignaturas'));
     }
 
     public function store(Request $request)
     {
-        // Valida los datos del formulario y guarda el nuevo usuario
         $request->validate([
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'correo_electronico' => 'required|email',
-            // Agrega más reglas de validación según tus necesidades
+            'nombre' => 'required|max:50',
+            'apellido' => 'required|max:50',
+            'correo_electronico' => 'required|email|unique:Usuario,CorreoElectronico',
+            'tipo_usuario_id' => 'required|exists:TipoUsuario,TipoUsuarioID',
+            'asignatura_id' => 'exists:Asignatura,AsignaturaID',
         ]);
 
         Usuario::create([
             'Nombre' => $request->input('nombre'),
             'Apellido' => $request->input('apellido'),
             'CorreoElectronico' => $request->input('correo_electronico'),
-            // Agrega más campos aquí según tus necesidades
+            'TipoUsuarioID' => $request->input('tipo_usuario_id'),
+            'AsignaturaID' => $request->input('asignatura_id'),
         ]);
 
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
@@ -42,31 +47,32 @@ class UsuarioController extends Controller
 
     public function edit($id)
     {
-        // Obtén el usuario por su ID y pasa a la vista de edición
         $usuario = Usuario::find($id);
-        return view('Administracion.Usuario.edit', compact('usuario'));
+        $tiposUsuario = TipoUsuario::all();
+        $asignaturas = Asignatura::all();
+
+        return view('Administracion.Usuario.edit', compact('usuario', 'tiposUsuario', 'asignaturas'));
     }
 
     public function update(Request $request, $id)
     {
-        // Valida los datos del formulario y actualiza el usuario existente
         $request->validate([
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'correo_electronico' => 'required|email',
-            // Agrega más reglas de validación según tus necesidades
+            'nombre' => 'required|max:50',
+            'apellido' => 'required|max:50',
+            'correo_electronico' => 'required|email|unique:Usuario,CorreoElectronico,' . $id,
+            'tipo_usuario_id' => 'required|exists:TipoUsuario,TipoUsuarioID',
+            'asignatura_id' => 'exists:Asignatura,AsignaturaID',
         ]);
 
         $usuario = Usuario::find($id);
 
         if ($usuario) {
-            $usuario->update([
-                'Nombre' => $request->input('nombre'),
-                'Apellido' => $request->input('apellido'),
-                'CorreoElectronico' => $request->input('correo_electronico'),
-                // Actualiza más campos aquí según tus necesidades
-            ]);
-
+            $usuario->Nombre = $request->input('nombre');
+            $usuario->Apellido = $request->input('apellido');
+            $usuario->CorreoElectronico = $request->input('correo_electronico');
+            $usuario->TipoUsuarioID = $request->input('tipo_usuario_id');
+            $usuario->AsignaturaID = $request->input('asignatura_id');
+            $usuario->save();
             return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente.');
         } else {
             return redirect()->route('usuarios.index')->with('error', 'No se pudo encontrar el usuario a actualizar.');
@@ -75,7 +81,6 @@ class UsuarioController extends Controller
 
     public function destroy($id)
     {
-        // Elimina el usuario por su ID
         $usuario = Usuario::find($id);
 
         if ($usuario) {

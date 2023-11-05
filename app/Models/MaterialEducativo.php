@@ -22,7 +22,7 @@ class MaterialEducativo extends Model
         'FechaSubida',
     ];
 
-    public function profesor()
+    public function usuario()
     {
         return $this->belongsTo(Usuario::class, 'UsuarioID', 'UsuarioID');
     }

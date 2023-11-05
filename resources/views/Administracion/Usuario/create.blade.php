@@ -2,37 +2,46 @@
 
 @section('content')
 <div class="container">
-    <h2 class="user-form-title">Crear Usuario</h2>
+    <h2 class="user-form-title">Agregar Usuario</h2>
+
     <form method="POST" action="{{ route('usuarios.create') }}" class="user-form">
         @csrf
 
         <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su nombre" required>
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label for="apellido">Apellido</label>
-            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingrese su apellido" required>
+            <label for="apellido">Apellido:</label>
+            <input type="text" name="apellido" id="apellido" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label for="correo">Correo Electrónico</label>
-            <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo electrónico" required>
+            <label for="correo_electronico">Correo Electrónico:</label>
+            <input type="email" name="correo_electronico" id="correo_electronico" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label for="rol">Rol</label>
-            <select class="form-control" id="rol" name="rol" required>
-                <option value="Usuario">Usuario</option>
-                <option value="Administrador">Administrador</option>
+            <label for="tipo_usuario_id">Rol:</label>
+            <select name="tipo_usuario_id" id="tipo_usuario_id" class="form-control" required>
+                @foreach($tiposUsuario as $tipo)
+                    <option value="{{ $tipo->TipoUsuarioID }}">{{ $tipo->Tipo }}</option>
+                @endforeach
             </select>
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary user-form-button">Crear</button>
-            <a href="{{ route('usuarios.index') }}" class="btn btn-secondary user-form-button cancel">Cancelar</a>
+            <label for="asignatura_id">Asignatura:</label>
+            <select name="asignatura_id" id="asignatura_id" class="form-control">
+                <option value="">Seleccionar Asignatura</option>
+                @foreach($asignaturas as $asignatura)
+                    <option value="{{ $asignatura->AsignaturaID }}">{{ $asignatura->Nombre }}</option>
+                @endforeach
+            </select>
         </div>
+
+        <button type="submit" class="btn btn-primary user-form-button">Guardar Usuario</button>
     </form>
 </div>
 @endsection

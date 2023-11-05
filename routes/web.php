@@ -8,6 +8,7 @@ use App\Http\Controllers\NivelController;
 use App\Http\Controllers\AsignaturaController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\RespuestaController;
+use App\Http\Controllers\CambioController;
 use Illuminate\Support\Facades\Route;
 
 // Ruta para mostrar la página principal (el home)
@@ -57,9 +58,10 @@ Route::delete('/asignaturas/{id}', [AsignaturaController::class, 'destroy'])->na
 Route::get('/materiales', [MaterialController::class, 'index'])->name('materiales.index');
 Route::get('/materiales/create', [MaterialController::class, 'create'])->name('materiales.create');
 Route::post('/materiales', [MaterialController::class, 'store'])->name('materiales.store');
-Route::get('/materiales/{id}/edit', [MaterialController::class, 'edit'])->name('materiales.edit');
 Route::put('/materiales/{id}', [MaterialController::class, 'update'])->name('materiales.update');
 Route::delete('/materiales/{id}', [MaterialController::class, 'destroy'])->name('materiales.destroy');
+Route::get('/materiales/{id}/edit', [MaterialController::class, 'edit'])->name('materiales.edit');
+
 
 
 
