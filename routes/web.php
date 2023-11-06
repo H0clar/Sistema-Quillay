@@ -9,12 +9,34 @@ use App\Http\Controllers\AsignaturaController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\RespuestaController;
 use App\Http\Controllers\CambioController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
-// Ruta para mostrar la página principal (el home)
+// Ruta para mostrar la página de inicio de sesión al acceder a la URL raíz
 Route::get('/', function () {
+    return view('Login.login');
+});
+
+// Ruta para mostrar la página principal (el home)
+Route::get('/home', function () {
     return view('home');
 })->name('home');
+
+Route::get('/login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('/login/google/callback', [LoginController::class, 'handleGoogleCallback']);
+Route::get('/login', [LoginController::class, 'login'])->name('login'); // Usando la acción 'login' del controlador
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+// Resto de tus rutas...
+
+
+Route::middleware(['auth'])->group(function () { // Agrupa las rutas que requieren autenticación
+    Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
+    Route::get('/usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create');
+    Route::post('/usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
+    Route::get('/usuarios/{id}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit');
+    Route::put('/usuarios/{id}', [UsuarioController::class, 'update'])->name('usuarios.update');
+    Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
+});
 
 // Rutas para la gestión de usuarios
 Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
@@ -39,13 +61,6 @@ Route::get('/cursos/{id}/edit', [CursoController::class, 'edit'])->name('cursos.
 Route::delete('/cursos/{id}', [CursoController::class, 'destroy'])->name('cursos.destroy');
 Route::put('/cursos/{id}', [CursoController::class, 'update'])->name('cursos.update');
 
-
-
-
-
-
-
-
 // Rutas para la gestión de asignaturas
 Route::get('/asignaturas', [AsignaturaController::class, 'index'])->name('asignaturas.index');
 Route::get('/asignaturas/create', [AsignaturaController::class, 'create'])->name('asignaturas.create');
@@ -62,11 +77,6 @@ Route::put('/materiales/{id}', [MaterialController::class, 'update'])->name('mat
 Route::delete('/materiales/{id}', [MaterialController::class, 'destroy'])->name('materiales.destroy');
 Route::get('/materiales/{id}/edit', [MaterialController::class, 'edit'])->name('materiales.edit');
 
-
-
-
-
-
 // Rutas para la gestión de comentarios y respuestas en la misma vista
 Route::get('/comentarios', [ComentarioController::class, 'index'])->name('comentarios.index');
 Route::get('/comentarios/create', [ComentarioController::class, 'create'])->name('comentarios.create');
@@ -82,14 +92,13 @@ Route::get('/respuestas/{id}/edit', [RespuestaController::class, 'edit'])->name(
 Route::put('/respuestas/{id}', [RespuestaController::class, 'update'])->name('respuestas.update');
 Route::delete('/respuestas/{id}', [RespuestaController::class, 'destroy'])->name('respuestas.destroy');
 
-//Rutas para la gestion de cambios
+// Rutas para la gestión de cambios
 Route::get('/cambios', [CambioController::class, 'index'])->name('cambios.index');
 Route::get('/cambios/create', [CambioController::class, 'create'])->name('cambios.create');
 Route::post('/cambios', [CambioController::class, 'store'])->name('cambios.store');
 Route::get('/cambios/{id}/edit', [CambioController::class, 'edit'])->name('cambios.edit');
 Route::put('/cambios/{id}', [CambioController::class, 'update'])->name('cambios.update');
 Route::delete('/cambios/{id}', [CambioController::class, 'destroy'])->name('cambios.destroy');
-
 
 // Rutas para la gestión de notificaciones
 Route::get('/notificaciones', [NotificacionesController::class, 'index'])->name('notificaciones.index');

@@ -72,11 +72,11 @@
                     <td>{{ $material->RutaGoogleDrive }}</td>
                     <td>{{ $material->FechaSubida }}</td>
                     <td>
-                        <a href="{{ route('materiales.edit', $material->MaterialID) }}" class="btn btn-primary btn-sm">Editar</a>
+                        <a href="{{ route('materiales.edit', $material->MaterialID) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
                         <form method="POST" action="{{ route('materiales.destroy', $material->MaterialID) }}" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            <button type="submit" class="btn btn-danger btn-sm user-delete" onclick="return confirm('¿Estás seguro de eliminar este material educativo?')">Eliminar</button>
                         </form>
                     </td>
                 </tr>
