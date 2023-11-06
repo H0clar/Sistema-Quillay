@@ -26,4 +26,6 @@ class Asignatura extends Model
     {
         return $this->belongsToMany(Estudiante::class, 'estudiante_asignatura', 'AsignaturaID', 'EstudianteID');
     }
+
+    
 }

@@ -8,13 +8,18 @@
         @csrf
 
         <div class="form-group">
-            <label for="tipo_archivo">Tipo de Archivo</label>
-            <input type="text" class="form-control" id="tipo_archivo" name="TipoArchivo" required>
+            <label for="TipoArchivoID">Tipo de Archivo</label>
+            <select class="form-control" id="TipoArchivoID" name="TipoArchivoID" required>
+                <option value="" disabled selected>Seleccione un tipo de archivo</option>
+                @foreach($tiposArchivo as $tipoArchivo)
+                    <option value="{{ $tipoArchivo->TipoArchivoID }}">{{ $tipoArchivo->Tipo }}</option>
+                @endforeach
+            </select>
         </div>
 
         <div class="form-group">
-            <label for="profesor">Profesor</label>
-            <select class="form-control" id="usuario" name="ProfesorID" required>
+            <label for="ProfesorID">Profesor</label>
+            <select class="form-control" id="ProfesorID" name="ProfesorID" required>
                 <option value="" disabled selected>Seleccione un profesor</option>
                 @foreach($profesores as $profesor)
                     <option value="{{ $profesor->UsuarioID }}">{{ $profesor->Nombre }}</option>
@@ -23,8 +28,8 @@
         </div>
 
         <div class="form-group">
-            <label for="asignatura">Asignatura</label>
-            <select class="form-control" id="asignatura" name="AsignaturaID" required>
+            <label for="AsignaturaID">Asignatura</label>
+            <select class="form-control" id="AsignaturaID" name="AsignaturaID" required>
                 <option value="" disabled selected>Seleccione una asignatura</option>
                 @foreach($asignaturas as $asignatura)
                     <option value="{{ $asignatura->AsignaturaID }}">{{ $asignatura->Nombre }}</option>
@@ -33,8 +38,8 @@
         </div>
 
         <div class="form-group">
-            <label for="curso">Curso</label>
-            <select class="form-control" id="curso" name="CursoID" required>
+            <label for="CursoID">Curso</label>
+            <select class="form-control" id="CursoID" name="CursoID" required>
                 <option value="" disabled selected>Seleccione un curso</option>
                 @foreach($cursos as $curso)
                     <option value="{{ $curso->CursoID }}">{{ $curso->Nombre }}</option>
@@ -43,8 +48,8 @@
         </div>
 
         <div class="form-group">
-            <label for="nivel_educativo">Nivel Educativo</label>
-            <select class="form-control" id="nivel_educativo" name="NivelEducativoID" required>
+            <label for="NivelEducativoID">Nivel Educativo</label>
+            <select class="form-control" id="NivelEducativoID" name="NivelEducativoID" required>
                 <option value="" disabled selected>Seleccione un nivel educativo</option>
                 @foreach($nivelesEducativos as $nivel)
                     <option value="{{ $nivel->NivelEducativoID }}">{{ $nivel->Nombre }}</option>
@@ -53,21 +58,21 @@
         </div>
 
         <div class="form-group">
-            <label for="estado">Estado</label>
-            <select class="form-control" id="estado" name="Estado" required>
+            <label for="Estado">Estado</label>
+            <select class="form-control" id="Estado" name="Estado" required>
                 <option value="Activo">Activo</option>
                 <option value="No Activo">No Activo</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="fecha_subida">Fecha de Subida</label>
-            <input type="date" class="form-control" id="fecha_subida" name="FechaSubida" required>
+            <label for="FechaSubida">Fecha de Subida</label>
+            <input type="date" class="form-control" id="FechaSubida" name="FechaSubida" required>
         </div>
 
         <div class="form-group">
             <label for="archivo">Archivo (solo PDF)</label>
-            <input type="file" class="form-control" id="archivo" name="archivo" required>
+            <input type="file" class="form-control" id="archivo" name="archivo" accept=".pdf" required>
         </div>
 
         <button type="submit" class="btn btn-primary user-form-button">Agregar Material Educativo</button>

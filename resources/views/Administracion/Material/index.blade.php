@@ -38,7 +38,7 @@
             @foreach($materiales as $material)
                 <tr>
                     <td>{{ $material->MaterialID }}</td>
-                    <td>{{ $material->TipoArchivo }}</td>
+                    <td>{{ $material->tipoArchivo->Tipo }}</td>
                     <td>{{ $material->NombreArchivo }}</td>
                     <td>
                         @if ($material->usuario)
@@ -68,12 +68,16 @@
                             N/A
                         @endif
                     </td>
-                    <td>{{ $material->Estado }}</td>
+                    <td>{{ $material->Estado ? 'Activo' : 'Inactivo' }}</td>
                     <td>{{ $material->RutaGoogleDrive }}</td>
                     <td>{{ $material->FechaSubida }}</td>
                     <td>
                         <a href="{{ route('materiales.edit', $material->MaterialID) }}" class="btn btn-primary btn-sm">Editar</a>
-                        <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                        <form method="POST" action="{{ route('materiales.destroy', $material->MaterialID) }}" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

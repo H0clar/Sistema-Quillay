@@ -36,4 +36,16 @@ class CambioController extends Controller
             return redirect()->route('cambios.index')->with('error', 'No se pudo encontrar el registro de cambio a eliminar.');
         }
     }
+
+    // Nueva función para obtener la descripción del cambio
+    public function obtenerDescripcionCambio($log) {
+        $usuarioNombre = $log->usuario->Nombre . ' ' . $log->usuario->Apellido;
+        $materialNombre = $log->material->NombreArchivo;
+        $tipoCambio = $log->tipoCambio->TipoCambio;
+        $fechaCambio = $log->FechaCambio;
+
+        $descripcion = "{$usuarioNombre} ha realizado un cambio en el material educativo '{$materialNombre}' (Tipo: {$tipoCambio}) el {$fechaCambio}";
+
+        return $descripcion;
+    }
 }

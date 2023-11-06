@@ -11,13 +11,13 @@ class MaterialEducativo extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'TipoArchivo',
+        'TipoArchivoID',
+        'NombreArchivo',
         'UsuarioID',
         'AsignaturaID',
         'CursoID',
         'NivelEducativoID',
         'Estado',
-        'Visible',
         'RutaGoogleDrive',
         'FechaSubida',
     ];
@@ -40,5 +40,10 @@ class MaterialEducativo extends Model
     public function nivelEducativo()
     {
         return $this->belongsTo(NivelEducativo::class, 'NivelEducativoID', 'NivelEducativoID');
+    }
+
+    public function tipoArchivo()
+    {
+        return $this->belongsTo(TipoArchivo::class, 'TipoArchivoID', 'TipoArchivoID');
     }
 }

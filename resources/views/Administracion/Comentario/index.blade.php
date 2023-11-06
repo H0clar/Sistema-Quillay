@@ -8,10 +8,11 @@
         <thead>
             <tr>
                 <th>ID del Comentario</th>
-                <th>ID del Material Educativo</th>
-                <th>ID del Usuario</th>
-                <th>Comentario/Respuesta</th>
-                <th>Fecha</th>
+                <th>Material Educativo</th>
+                <th>Usuario</th>
+                <th>Comentario</th>
+                <th>Respuesta</th>
+                <th>Fecha de Comentario</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -19,14 +20,14 @@
             @foreach($comentarios as $comentario)
                 <tr>
                     <td>{{ $comentario->ComentarioID }}</td>
-                    <td>{{ $comentario->MaterialID }}</td>
-                    <td>{{ $comentario->UsuarioID }}</td>
+                    <td>{{ $comentario->material->NombreArchivo }} ({{ $comentario->material->TipoArchivo->Tipo }})</td>
+                    <td>{{ $comentario->usuario->Nombre }} {{ $comentario->usuario->Apellido }}</td>
+                    <td>{{ $comentario->Comentario }}</td>
                     <td>
-                        <strong>Comentario:</strong> {{ $comentario->Comentario }}<br>
                         @if ($comentario->respuestas->count() > 0)
-                            <strong>Respuesta:</strong> {{ $comentario->respuestas[0]->Respuesta }}
+                            {{ $comentario->respuestas[0]->Respuesta }}
                         @else
-                            <em>Sin respuesta</em>
+                            Sin respuesta
                         @endif
                     </td>
                     <td>{{ $comentario->FechaComentario }}</td>
