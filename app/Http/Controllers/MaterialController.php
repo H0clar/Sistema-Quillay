@@ -9,8 +9,8 @@ use App\Models\Usuario;
 use App\Models\NivelEducativo;
 use App\Models\TipoArchivo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class MaterialController extends Controller
 {
@@ -144,4 +144,21 @@ class MaterialController extends Controller
             return redirect()->route('materiales.index')->with('error', 'No se pudo encontrar el material educativo.');
         }
     }
+
+    public function getCursosByNivelEducativo($nivelEducativoID)
+    {
+        $cursos = Curso::where('NivelEducativoID', $nivelEducativoID)->get();
+
+        return response()->json($cursos);
+    }
+
+    public function getAsignaturasByCurso($cursoID)
+    {
+        $asignaturas = Asignatura::where('CursoID', $cursoID)->get();
+
+        return response()->json($asignaturas);
+    }
+
+    
+    
 }

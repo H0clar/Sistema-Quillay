@@ -31,16 +31,13 @@
             <label for="AsignaturaID">Asignatura</label>
             <select class="form-control" id="AsignaturaID" name="AsignaturaID" required>
                 <option value="" disabled selected>Seleccione una asignatura</option>
-                @foreach($asignaturas as $asignatura)
-                    <option value="{{ $asignatura->AsignaturaID }}">{{ $asignatura->Nombre }}</option>
-                @endforeach
             </select>
         </div>
 
         <div class="form-group">
             <label for="CursoID">Curso</label>
             <select class="form-control" id="CursoID" name="CursoID" required>
-                <option value="" disabled selected>Seleccione un curso</option>
+                <option value="" disabled selected>Seleccione un nivel educativo primero</option>
                 @foreach($cursos as $curso)
                     <option value="{{ $curso->CursoID }}">{{ $curso->Nombre }}</option>
                 @endforeach
@@ -78,4 +75,70 @@
         <button type="submit" class="btn btn-primary user-form-button">Agregar Material Educativo</button>
     </form>
 </div>
+
+<script>
+    document.getElementById('NivelEducativoID').addEventListener('change', function() {
+        var nivelEducativoID = this.value;
+        var cursosSelector = document.getElementById('CursoID');
+
+        // Limpiar opciones existentes
+        cursosSelector.innerHTML = '';
+
+        // Realizar una solicitud AJAX para obtener los cursos
+        fetch(`/cursos-por-nivel-educativo/${nivelEducativoID}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(curso => {
+                    var option = document.createElement('option');
+                    option.value = curso.CursoID;
+                    option.textContent = curso.Nombre;
+                    cursosSelector.appendChild(option);
+                });
+            });
+
+        // Limpiar las asignaturas cuando cambia el nivel educativo
+        var asignaturasSelector = document.getElementById('AsignaturaID');
+        asignaturasSelector.innerHTML = '<option value="" disabled selected>Seleccione una asignatura</option>';
+    });
+
+    document.getElementById('CursoID').addEventListener('change', function() {
+        var cursoID = this.value;
+        var asignaturasSelector = document.getElementById('AsignaturaID');
+
+        // Limpiar opciones existentes
+        asignaturasSelector.innerHTML = '';
+
+        // Realizar una solicitud AJAX para obtener las asignaturas
+        fetch(`/asignaturas-por-curso/${cursoID}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(asignatura => {
+                    var option = document.createElement('option');
+                    option.value = asignatura.AsignaturaID;
+                    option.textContent = asignatura.Nombre;
+                    asignaturasSelector.appendChild(option);
+                });
+            });
+    });
+
+    document.getElementById('ProfesorID').addEventListener('change', function() {
+        var profesorID = this.value;
+        var asignaturasSelector = document.getElementById('AsignaturaID');
+
+        // Limpiar opciones existentes
+        asignaturasSelector.innerHTML = '';
+
+        // Realizar una solicitud AJAX para obtener las asignaturas
+        fetch(`/asignaturas-por-profesor/${profesorID}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(asignatura => {
+                    var option = document.createElement('option');
+                    option.value = asignatura.AsignaturaID;
+                    option.textContent = asignatura.Nombre;
+                    asignaturasSelector.appendChild(option);
+                });
+            });
+    });
+</script>
 @endsection

@@ -12,35 +12,31 @@ use App\Http\Controllers\CambioController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
-// Ruta para mostrar la página de inicio de sesión al acceder a la URL raíz
 Route::get('/', function () {
     return view('Login.login');
 });
 
-// Ruta para mostrar la página principal (el home)
 Route::get('/home', function () {
     return view('home');
 })->name('home');
 
 Route::get('/login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/login/google/callback', [LoginController::class, 'handleGoogleCallback']);
-Route::get('/login', [LoginController::class, 'login'])->name('login'); // Usando la acción 'login' del controlador
+Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-// Resto de tus rutas...
+
+Route::middleware(['auth'])->group(function () {
+    
 
 
-Route::middleware(['auth'])->group(function () { // Agrupa las rutas que requieren autenticación
-    Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
-    Route::get('/usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create');
-    Route::post('/usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
-    Route::get('/usuarios/{id}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit');
-    Route::put('/usuarios/{id}', [UsuarioController::class, 'update'])->name('usuarios.update');
-    Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
+
 });
+
 
 // Rutas para la gestión de usuarios
 Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
 Route::get('/usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create');
+Route::post('/usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
 Route::get('/usuarios/{id}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit');
 Route::put('/usuarios/{id}', [UsuarioController::class, 'update'])->name('usuarios.update');
 Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
@@ -53,7 +49,9 @@ Route::get('/niveles/{id}/edit', [NivelController::class, 'edit'])->name('nivele
 Route::put('/niveles/{id}', [NivelController::class, 'update'])->name('niveles.update');
 Route::delete('/niveles/{id}', [NivelController::class, 'destroy'])->name('niveles.destroy');
 
-// Rutas para la gestión de cursos
+
+
+// Rutas para la gestión de cursos, asignaturas, materiales, comentarios, respuestas, cambios y notificaciones
 Route::get('/cursos', [CursoController::class, 'index'])->name('cursos.index');
 Route::get('/cursos/create', [CursoController::class, 'create'])->name('cursos.create');
 Route::post('/cursos', [CursoController::class, 'store'])->name('cursos.store');
@@ -61,7 +59,6 @@ Route::get('/cursos/{id}/edit', [CursoController::class, 'edit'])->name('cursos.
 Route::delete('/cursos/{id}', [CursoController::class, 'destroy'])->name('cursos.destroy');
 Route::put('/cursos/{id}', [CursoController::class, 'update'])->name('cursos.update');
 
-// Rutas para la gestión de asignaturas
 Route::get('/asignaturas', [AsignaturaController::class, 'index'])->name('asignaturas.index');
 Route::get('/asignaturas/create', [AsignaturaController::class, 'create'])->name('asignaturas.create');
 Route::post('/asignaturas', [AsignaturaController::class, 'store'])->name('asignaturas.store');
@@ -100,5 +97,26 @@ Route::get('/cambios/{id}/edit', [CambioController::class, 'edit'])->name('cambi
 Route::put('/cambios/{id}', [CambioController::class, 'update'])->name('cambios.update');
 Route::delete('/cambios/{id}', [CambioController::class, 'destroy'])->name('cambios.destroy');
 
+
+
+
+
+Route::get('/cursos-por-nivel-educativo/{nivelEducativoID}', [MaterialController::class, 'getCursosByNivelEducativo']);
+Route::get('/asignaturas-por-curso/{cursoID}', [MaterialController::class, 'getAsignaturasByCurso']);
+
+
+
+Route::get('/cursos-por-nivel-educativo/{nivelEducativoID}', [MaterialController::class, 'getCursosByNivelEducativo']);
+Route::get('/asignaturas-por-profesor/{profesorID}', [MaterialController::class, 'getAsignaturasByCurso']);
+Route::get('/materiales-por-asignatura/{asignaturaID}', [MaterialController::class, 'getMaterialesByAsignatura']);
+
+
+
+
+
+
 // Rutas para la gestión de notificaciones
 Route::get('/notificaciones', [NotificacionesController::class, 'index'])->name('notificaciones.index');
+
+
+
