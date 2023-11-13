@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2 class="user-list-title">Niveles Educativos</h2>
-    <a href="{{ route('niveles.create') }}" class="btn btn-primary add-user-button">Crear Nuevo Nivel Educativo</a>
+    <a href="{{ route('niveles.store') }}" class="btn btn-primary add-user-button">Crear Nuevo Nivel Educativo</a>
 
     <!-- Contenedor para el formulario de filtrado con margen inferior -->
     <div class="user-filter-container mb-3">

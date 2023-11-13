@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use App\Models\TipoUsuario;
 use App\Models\Asignatura;
+use App\Models\Log;
+
+use App\Models\MaterialEducativo;
+
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
     public function index()
     {
-        $usuarios = Usuario::with('tipoUsuario', 'asignatura')->get(); // Cargar relaciones TipoUsuario y Asignatura
+        $usuarios = Usuario::with('tipoUsuario', 'asignatura')->get();
         return view('Administracion.Usuario.index', compact('usuarios'));
     }
-
 
     public function create()
     {
@@ -29,17 +32,15 @@ class UsuarioController extends Controller
         $request->validate([
             'nombre' => 'required|max:50',
             'apellido' => 'required|max:50',
-            'correo_electronico' => 'required|email|unique:Usuario,CorreoElectronico',
             'tipo_usuario_id' => 'required|exists:TipoUsuario,TipoUsuarioID',
-            'asignatura_id' => 'exists:Asignatura,AsignaturaID',
+            'rut' => 'required|max:20', // Validación para el nuevo campo Rut
         ]);
 
         Usuario::create([
             'Nombre' => $request->input('nombre'),
             'Apellido' => $request->input('apellido'),
-            'CorreoElectronico' => $request->input('correo_electronico'),
+            'Rut' => $request->input('rut'), // Nuevo campo Rut
             'TipoUsuarioID' => $request->input('tipo_usuario_id'),
-            'AsignaturaID' => $request->input('asignatura_id'),
         ]);
 
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
@@ -59,9 +60,7 @@ class UsuarioController extends Controller
         $request->validate([
             'nombre' => 'required|max:50',
             'apellido' => 'required|max:50',
-            'correo_electronico' => 'required|email|unique:Usuario,CorreoElectronico,' . $id,
             'tipo_usuario_id' => 'required|exists:TipoUsuario,TipoUsuarioID',
-            'asignatura_id' => 'exists:Asignatura,AsignaturaID',
         ]);
 
         $usuario = Usuario::find($id);
@@ -69,9 +68,7 @@ class UsuarioController extends Controller
         if ($usuario) {
             $usuario->Nombre = $request->input('nombre');
             $usuario->Apellido = $request->input('apellido');
-            $usuario->CorreoElectronico = $request->input('correo_electronico');
             $usuario->TipoUsuarioID = $request->input('tipo_usuario_id');
-            $usuario->AsignaturaID = $request->input('asignatura_id');
             $usuario->save();
             return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente.');
         } else {
@@ -84,10 +81,19 @@ class UsuarioController extends Controller
         $usuario = Usuario::find($id);
 
         if ($usuario) {
+            // Eliminar registros relacionados en la tabla Log
+            Log::where('UsuarioID', $id)->delete();
+
+            // Eliminar registros relacionados en la tabla material_educativo
+            Material_Educativo::where('UsuarioID', $id)->delete();
+
+            // Ahora puedes eliminar el usuario
             $usuario->delete();
+
             return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
         } else {
             return redirect()->route('usuarios.index')->with('error', 'No se pudo encontrar el usuario a eliminar.');
         }
     }
+
 }

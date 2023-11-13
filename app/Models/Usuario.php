@@ -12,14 +12,15 @@ class Usuario extends Model
     protected $table = 'usuario'; // Nombre de la tabla en la base de datos
 
     protected $primaryKey = 'UsuarioID'; // Clave primaria de la tabla
+    public $timestamps = false;
 
     // Define las propiedades (columnas) de la tabla
     protected $fillable = [
         'Nombre',
         'Apellido',
         'CorreoElectronico',
+        'Rut',
         'TipoUsuarioID',
-        'AsignaturaID',
     ];
 
     // Define la relación con el tipo de usuario
@@ -33,4 +34,26 @@ class Usuario extends Model
     {
         return $this->belongsTo(Asignatura::class, 'AsignaturaID', 'AsignaturaID');
     }
+
+    public function curso()
+    {
+        return $this->belongsTo(Curso::class, 'CursoID', 'CursoID');
+    }
+
+    public function nivelEducativo()
+    {
+        return $this->belongsTo(NivelEducativo::class, 'NivelEducativoID', 'NivelEducativoID');
+    }
+
+    public function materialEducativo()
+    {
+        return $this->hasMany(MaterialEducativo::class, 'UsuarioID', 'UsuarioID');
+    }
+
+    // En tu modelo Usuario
+    public function logs()
+    {
+        return $this->hasMany(Log::class, 'UsuarioID', 'UsuarioID');
+    }
+
 }

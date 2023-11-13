@@ -2,13 +2,14 @@
 
 @section('content')
 <div class="container">
-    <h2 class="material-form-title">Eliminar Material Educativo</h2>
-    <p>¿Estás seguro de que deseas eliminar el material educativo: "{{ $material->nombre }}"?</p>
-    <form action="{{ route('materiales.destroy', $id) }}" method="POST">
+    <h2 class="user-form-title">Ocultar Material Educativo</h2>
+
+    <form method="POST" action="{{ route('materiales.destroy', $material->MaterialID) }}" onsubmit="return confirm('¿Seguro que quieres ocultar este material?');" class="user-form">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-danger material-form-button">Eliminar Material Educativo</button>
-        <a href="{{ route('materiales.index') }}" class="btn btn-secondary material-form-button">Cancelar</a>
+
+        <button type="submit" class="btn btn-danger user-form-button">Ocultar Material Educativo</button>
     </form>
 </div>
+
 @endsection

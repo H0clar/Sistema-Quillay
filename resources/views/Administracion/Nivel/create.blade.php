@@ -18,8 +18,8 @@
 
         <div class="form-group">
             <button type="submit" class="btn btn-primary user-form-button">Crear</button>
-            <a href="{{ route('niveles.index') }}" class="btn btn-secondary user-form-button cancel">Cancelar</a>
-        </div>
+            <form method="POST" action="{{ route('niveles.store') }}" class="user-form">
+            </div>
     </form>
 </div>
 @endsection

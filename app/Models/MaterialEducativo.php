@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+
 use Illuminate\Database\Eloquent\Model;
 
 class MaterialEducativo extends Model
@@ -46,4 +49,10 @@ class MaterialEducativo extends Model
     {
         return $this->belongsTo(TipoArchivo::class, 'TipoArchivoID', 'TipoArchivoID');
     }
+
+    public function log()
+    {
+        return $this->hasMany(Log::class);
+    }
+
 }

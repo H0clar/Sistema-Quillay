@@ -11,9 +11,107 @@
         <form method="GET" action="{{ route('materiales.index') }}" class="form-inline">
             @csrf
 
-            <!-- Agrega tus campos de filtro según sea necesario -->
 
-            <button type="submit" class="btn btn-primary user-filter-button">Filtrar</button>
+
+
+            <div class="form-group ml-2">
+                <label for="tipoArchivo" class="log-filter-label">Filtrar por Tipo de Archivo:</label>
+                <div class="input-group">
+                    <select class="form-control log-filter-select" id="tipoArchivo" name="tipoArchivo">
+                        <option value="" {{ !$tipoArchivoFilter ? 'selected' : '' }}>Todos los Tipos de Archivo</option>
+                        @foreach($tiposArchivo as $tipo)
+                            <option value="{{ $tipo->Tipo }}" {{ $tipoArchivoFilter == $tipo->Tipo ? 'selected' : '' }}>
+                                {{ $tipo->Tipo }}
+                            </option>
+                        @endforeach
+
+                    </select>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="usuario" class="log-filter-label">Filtrar por Usuario:</label>
+                <div class="input-group">
+                    <select class="form-control log-filter-select" id="usuario" name="usuario">
+                        <option value="" {{ !$usuarioFilter ? 'selected' : '' }}>Todos los Usuarios</option>
+                        @foreach($usuarios as $usuario)
+                            <option value="{{ $usuario->UsuarioID }}" {{ $usuarioFilter == $usuario->UsuarioID ? 'selected' : '' }}>
+                                {{ $usuario->Nombre }} {{ $usuario->Apellido }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group ml-2">
+                <label for="nivelEducativo" class="log-filter-label">Filtrar por Nivel Educativo:</label>
+                <div class="input-group">
+                    <select class="form-control log-filter-select" id="nivelEducativo" name="nivelEducativo">
+                        <option value="" {{ !$nivelEducativoFilter ? 'selected' : '' }}>Todos los Niveles Educativos</option>
+                        @foreach($nivelesEducativos as $nivel)
+                            <option value="{{ $nivel->NivelEducativoID }}" {{ $nivelEducativoFilter == $nivel->NivelEducativoID ? 'selected' : '' }}>
+                                {{ $nivel->Nombre }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group ml-2">
+                <label for="curso" class="log-filter-label">Filtrar por Curso:</label>
+                <div class="input-group">
+                    <select class="form-control log-filter-select" id="curso" name="curso">
+                        <option value="" {{ !$cursoFilter ? 'selected' : '' }}>Todos los Cursos</option>
+                        @foreach($cursos as $curso)
+                            <option value="{{ $curso->CursoID }}" {{ $cursoFilter == $curso->CursoID ? 'selected' : '' }}>
+                                {{ $curso->Nombre }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+            
+            
+
+
+            <div class="form-group ml-2">
+                <label for="asignatura" class="log-filter-label">Filtrar por Asignatura:</label>
+                <div class="input-group">
+                    <select class="form-control log-filter-select" id="asignatura" name="asignatura">
+                        <option value="" {{ !$asignaturaFilter ? 'selected' : '' }}>Todas las Asignaturas</option>
+                        @foreach($asignaturas as $asignatura)
+                            <option value="{{ $asignatura->AsignaturaID }}" {{ $asignaturaFilter == $asignatura->AsignaturaID ? 'selected' : '' }}>
+                                {{ $asignatura->Nombre }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group ml-2">
+                <label for="fecha" class="log-filter-label">Filtrar por Fecha:</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="fecha" name="fecha" value="{{ $fechaFilter }}">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 

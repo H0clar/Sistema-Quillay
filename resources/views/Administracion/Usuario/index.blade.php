@@ -18,7 +18,7 @@
                 <th>Apellido</th>
                 <th>Correo Electrónico</th>
                 <th>Rol</th>
-                <th>Asignatura</th>
+                <th>Rut</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -29,13 +29,7 @@
                 <td>{{ $usuario->Apellido }}</td>
                 <td>{{ $usuario->CorreoElectronico }}</td>
                 <td>{{ $usuario->tipoUsuario->Tipo }}</td>
-                <td>
-                    @if ($usuario->asignatura)
-                        {{ $usuario->asignatura->Nombre }}
-                    @else
-                        N/A
-                    @endif
-                </td>
+                <td>{{ $usuario->Rut }}</td>
                 <td>
                     <a href="{{ route('usuarios.edit', $usuario->UsuarioID) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
                     <form action="{{ route('usuarios.destroy', $usuario->UsuarioID) }}" method="POST" style="display: inline;">

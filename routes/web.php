@@ -48,6 +48,8 @@ Route::post('/niveles', [NivelController::class, 'store'])->name('niveles.store'
 Route::get('/niveles/{id}/edit', [NivelController::class, 'edit'])->name('niveles.edit');
 Route::put('/niveles/{id}', [NivelController::class, 'update'])->name('niveles.update');
 Route::delete('/niveles/{id}', [NivelController::class, 'destroy'])->name('niveles.destroy');
+Route::post('/niveles/create', [NivelController::class, 'store'])->name('niveles.store');
+
 
 
 

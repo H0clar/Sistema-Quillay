@@ -4,7 +4,7 @@
 <div class="container">
     <h2 class="user-form-title">Agregar Usuario</h2>
 
-    <form method="POST" action="{{ route('usuarios.create') }}" class="user-form">
+    <form method="POST" action="{{ route('usuarios.store') }}" class="user-form">
         @csrf
 
         <div class="form-group">
@@ -18,8 +18,8 @@
         </div>
 
         <div class="form-group">
-            <label for="correo_electronico">Correo Electrónico:</label>
-            <input type="email" name="correo_electronico" id="correo_electronico" class="form-control" required>
+            <label for="rut">Rut:</label>
+            <input type="text" name="rut" id="rut" class="form-control" required>
         </div>
 
         <div class="form-group">
@@ -27,16 +27,6 @@
             <select name="tipo_usuario_id" id="tipo_usuario_id" class="form-control" required>
                 @foreach($tiposUsuario as $tipo)
                     <option value="{{ $tipo->TipoUsuarioID }}">{{ $tipo->Tipo }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="asignatura_id">Asignatura:</label>
-            <select name="asignatura_id" id="asignatura_id" class="form-control">
-                <option value="">Seleccionar Asignatura</option>
-                @foreach($asignaturas as $asignatura)
-                    <option value="{{ $asignatura->AsignaturaID }}">{{ $asignatura->Nombre }}</option>
                 @endforeach
             </select>
         </div>

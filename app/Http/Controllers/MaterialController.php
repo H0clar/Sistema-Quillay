@@ -8,17 +8,67 @@ use App\Models\Asignatura;
 use App\Models\Usuario;
 use App\Models\NivelEducativo;
 use App\Models\TipoArchivo;
+use App\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 class MaterialController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $materiales = MaterialEducativo::with('usuario', 'asignatura', 'curso', 'nivelEducativo', 'tipoArchivo')->get();
-        return view('Administracion.Material.index', compact('materiales'));
+        $tipoArchivoFilter = $request->input('tipoArchivo');
+        $usuarioFilter = $request->input('usuario');
+        $asignaturaFilter = $request->input('asignatura');
+        $nivelEducativoFilter = $request->input('nivelEducativo');
+        $cursoFilter = $request->input('curso');
+        $fechaFilter = $request->input('fecha'); // Agregamos la variable para el filtro de fecha
+
+        $tiposArchivo = TipoArchivo::all();
+        $usuarios = Usuario::all();
+        $asignaturas = Asignatura::all();
+        $nivelesEducativos = NivelEducativo::all();
+        $cursos = Curso::all();
+
+        $query = MaterialEducativo::with('usuario', 'asignatura', 'curso', 'nivelEducativo', 'tipoArchivo');
+
+        if ($tipoArchivoFilter) {
+            $query->whereHas('tipoArchivo', function ($q) use ($tipoArchivoFilter) {
+                $q->where('Tipo', $tipoArchivoFilter);
+            });
+        }
+
+        if ($usuarioFilter) {
+            $query->where('UsuarioID', $usuarioFilter);
+        }
+
+        if ($asignaturaFilter) {
+            $query->where('AsignaturaID', $asignaturaFilter);
+        }
+
+        if ($nivelEducativoFilter) {
+            $query->where('NivelEducativoID', $nivelEducativoFilter);
+        }
+
+        if ($cursoFilter) {
+            $query->where('CursoID', $cursoFilter);
+        }
+
+        if ($fechaFilter) {
+            $query->whereDate('FechaSubida', $fechaFilter);
+        }
+
+        $materiales = $query->get();
+
+        return view('Administracion.Material.index', compact('materiales', 'tiposArchivo', 'tipoArchivoFilter', 'usuarios', 'usuarioFilter', 'asignaturas', 'asignaturaFilter', 'nivelesEducativos', 'nivelEducativoFilter', 'cursos', 'cursoFilter', 'fechaFilter'));
     }
+
+
+
+
+
+
+
 
     public function create()
     {
@@ -31,12 +81,12 @@ class MaterialController extends Controller
         return view('Administracion.Material.create', compact('cursos', 'asignaturas', 'profesores', 'nivelesEducativos', 'tiposArchivo'));
     }
 
+
     public function store(Request $request)
     {
         $request->validate([
             'TipoArchivoID' => 'required',
             'archivo' => 'required|mimes:pdf',
-            'FechaSubida' => 'required',
             'ProfesorID' => 'required',
             'AsignaturaID' => 'required',
             'CursoID' => 'required',
@@ -58,7 +108,7 @@ class MaterialController extends Controller
             'NivelEducativoID' => $request->input('NivelEducativoID'),
             'Estado' => $estado,
             'RutaGoogleDrive' => 'storage/' . $nombreDelArchivoGuardado,
-            'FechaSubida' => $request->input('FechaSubida'),
+            'FechaSubida' => now()->format('Y-m-d'), // Utiliza la función now() para obtener la fecha actual
         ]);
 
         $material->save();
@@ -66,17 +116,28 @@ class MaterialController extends Controller
         return redirect()->route('materiales.index')->with('success', 'Material educativo agregado correctamente.');
     }
 
+
+
+
     public function destroy($id)
     {
         $material = MaterialEducativo::find($id);
 
         if ($material) {
-            $material->delete();
-            return redirect()->route('materiales.index')->with('success', 'Material educativo eliminado correctamente.');
+            // Asegúrate de que el campo Estado sea de tipo booleano
+            // y asigna un valor booleano en lugar de una cadena
+            $material->Estado = false;
+            $material->save();
+
+            return redirect()->route('materiales.index')->with('success', 'Material educativo ocultado correctamente.');
         } else {
-            return redirect()->route('materiales.index')->with('error', 'No se pudo encontrar el material educativo a eliminar.');
+            return redirect()->route('materiales.index')->with('error', 'No se pudo encontrar el material educativo a ocultar.');
         }
     }
+
+
+
+
 
     public function edit($id)
     {
