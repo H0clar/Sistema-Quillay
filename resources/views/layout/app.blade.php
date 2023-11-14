@@ -38,7 +38,11 @@
                         <img src="/img/iconos/notificacion/mensaje-sin-blanco.png" alt="Icono 2" width="24" height="24">
                     </div>
                 </div>
-                <span class="header-text logout">Cerrar Sesión</span>
+                <form id="logout-form" action="{{ route('logout') }}" method="GET">
+                    @csrf
+                    <span class="header-text logout" onclick="logout()" style="cursor: pointer; float: right; margin-right: 10px;">Cerrar Sesión</span>
+                </form>
+                
             </header>
             <div id="content-container">
                 @yield('content')
@@ -49,6 +53,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
+    <script>
+        function logout() {
+            document.getElementById('logout-form').submit();
+        }
+    </script>
 </body>
 </html>
