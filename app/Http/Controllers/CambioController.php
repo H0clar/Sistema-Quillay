@@ -39,7 +39,7 @@ class CambioController extends Controller
 
     // Nueva función para obtener la descripción del cambio
     public function obtenerDescripcionCambio($log) {
-        $usuarioNombre = $log->usuario->Nombre . ' ' . $log->usuario->Apellido;
+        $usuarioNombre = $log->user->Nombre . ' ' . $log->user->Apellido;
         $materialNombre = $log->material->NombreArchivo;
         $tipoCambio = $log->tipoCambio->TipoCambio;
         $fechaCambio = $log->FechaCambio;

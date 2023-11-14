@@ -27,6 +27,7 @@
                             </a>
                         </div>
 
+                        <!-- Agrega estos campos al formulario existente -->
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group">
@@ -40,7 +41,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for "password">{{ __('Password') }}</label>
+                                <label for="password">{{ __('Password') }}</label>
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -48,6 +49,7 @@
                                     </span>
                                 @enderror
                             </div>
+                            <!-- ... Otros campos ... -->
 
                             <div class="form-group">
                                 <div class="form-check">

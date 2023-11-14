@@ -23,16 +23,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($usuarios as $usuario)
+            @foreach($users as $user)
             <tr>
-                <td>{{ $usuario->Nombre }}</td>
-                <td>{{ $usuario->Apellido }}</td>
-                <td>{{ $usuario->CorreoElectronico }}</td>
-                <td>{{ $usuario->tipoUsuario->Tipo }}</td>
-                <td>{{ $usuario->Rut }}</td>
+                <td>{{ $user->Nombre }}</td>
+                <td>{{ $user->Apellido }}</td>
+                <td>{{ $user->CorreoElectronico }}</td>
+                <td>{{ $user->tipoUsuario->Tipo }}</td>
+                <td>{{ $user->Rut }}</td>
                 <td>
-                    <a href="{{ route('usuarios.edit', $usuario->UsuarioID) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
-                    <form action="{{ route('usuarios.destroy', $usuario->UsuarioID) }}" method="POST" style="display: inline;">
+                    <a href="{{ route('usuarios.edit', $user->UsuarioID) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
+                    <form action="{{ route('usuarios.destroy', $user->UsuarioID) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm user-delete" onclick="return confirm('¿Estás seguro de eliminar este usuario?')">Eliminar</button>

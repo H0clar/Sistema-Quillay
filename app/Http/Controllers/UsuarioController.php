@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Usuario;
+use App\Models\User;
 use App\Models\TipoUsuario;
 use App\Models\Asignatura;
 use App\Models\Log;
@@ -15,9 +15,10 @@ class UsuarioController extends Controller
 {
     public function index()
     {
-        $usuarios = Usuario::with('tipoUsuario', 'asignatura')->get();
-        return view('Administracion.Usuario.index', compact('usuarios'));
+        $users = User::with('tipoUsuario', 'asignatura')->get();
+        return view('Administracion.Usuario.index', compact('users')); // Cambiado de $usuarios a $users
     }
+
 
     public function create()
     {
@@ -36,7 +37,7 @@ class UsuarioController extends Controller
             'rut' => 'required|max:20', // Validación para el nuevo campo Rut
         ]);
 
-        Usuario::create([
+        User::create([
             'Nombre' => $request->input('nombre'),
             'Apellido' => $request->input('apellido'),
             'Rut' => $request->input('rut'), // Nuevo campo Rut
@@ -48,11 +49,11 @@ class UsuarioController extends Controller
 
     public function edit($id)
     {
-        $usuario = Usuario::find($id);
+        $user = User::find($id);
         $tiposUsuario = TipoUsuario::all();
         $asignaturas = Asignatura::all();
 
-        return view('Administracion.Usuario.edit', compact('usuario', 'tiposUsuario', 'asignaturas'));
+        return view('Administracion.Usuario.edit', compact('user', 'tiposUsuario', 'asignaturas'));
     }
 
     public function update(Request $request, $id)
@@ -63,13 +64,13 @@ class UsuarioController extends Controller
             'tipo_usuario_id' => 'required|exists:TipoUsuario,TipoUsuarioID',
         ]);
 
-        $usuario = Usuario::find($id);
+        $user = User::find($id);
 
-        if ($usuario) {
-            $usuario->Nombre = $request->input('nombre');
-            $usuario->Apellido = $request->input('apellido');
-            $usuario->TipoUsuarioID = $request->input('tipo_usuario_id');
-            $usuario->save();
+        if ($user) {
+            $user->Nombre = $request->input('nombre');
+            $user->Apellido = $request->input('apellido');
+            $user->TipoUsuarioID = $request->input('tipo_usuario_id');
+            $user->save();
             return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente.');
         } else {
             return redirect()->route('usuarios.index')->with('error', 'No se pudo encontrar el usuario a actualizar.');
@@ -78,17 +79,17 @@ class UsuarioController extends Controller
 
     public function destroy($id)
     {
-        $usuario = Usuario::find($id);
+        $user = User::find($id);
 
-        if ($usuario) {
+        if ($user) {
             // Eliminar registros relacionados en la tabla Log
             Log::where('UsuarioID', $id)->delete();
 
             // Eliminar registros relacionados en la tabla material_educativo
-            Material_Educativo::where('UsuarioID', $id)->delete();
+            MaterialEducativo::where('UsuarioID', $id)->delete();
 
             // Ahora puedes eliminar el usuario
-            $usuario->delete();
+            $user->delete();
 
             return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
         } else {

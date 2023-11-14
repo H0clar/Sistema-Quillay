@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MaterialEducativo;
 use App\Models\Curso;
 use App\Models\Asignatura;
-use App\Models\Usuario;
+use App\Models\User;
 use App\Models\NivelEducativo;
 use App\Models\TipoArchivo;
 use App\Models\Log;
@@ -18,14 +18,14 @@ class MaterialController extends Controller
     public function index(Request $request)
     {
         $tipoArchivoFilter = $request->input('tipoArchivo');
-        $usuarioFilter = $request->input('usuario');
+        $usuarioFilter = $request->input('user');
         $asignaturaFilter = $request->input('asignatura');
         $nivelEducativoFilter = $request->input('nivelEducativo');
         $cursoFilter = $request->input('curso');
         $fechaFilter = $request->input('fecha'); // Agregamos la variable para el filtro de fecha
 
         $tiposArchivo = TipoArchivo::all();
-        $usuarios = Usuario::all();
+        $users = User::all();
         $asignaturas = Asignatura::all();
         $nivelesEducativos = NivelEducativo::all();
         $cursos = Curso::all();
@@ -60,7 +60,7 @@ class MaterialController extends Controller
 
         $materiales = $query->get();
 
-        return view('Administracion.Material.index', compact('materiales', 'tiposArchivo', 'tipoArchivoFilter', 'usuarios', 'usuarioFilter', 'asignaturas', 'asignaturaFilter', 'nivelesEducativos', 'nivelEducativoFilter', 'cursos', 'cursoFilter', 'fechaFilter'));
+        return view('Administracion.Material.index', compact('materiales', 'tiposArchivo', 'tipoArchivoFilter', 'users', 'usuarioFilter', 'asignaturas', 'asignaturaFilter', 'nivelesEducativos', 'nivelEducativoFilter', 'cursos', 'cursoFilter', 'fechaFilter'));
     }
 
 
@@ -74,7 +74,7 @@ class MaterialController extends Controller
     {
         $cursos = Curso::all();
         $asignaturas = Asignatura::all();
-        $profesores = Usuario::where('TipoUsuarioID', 1)->get();
+        $profesores = User::where('TipoUsuarioID', 1)->get();
         $nivelesEducativos = NivelEducativo::all();
         $tiposArchivo = TipoArchivo::all();
 
@@ -144,7 +144,7 @@ class MaterialController extends Controller
         $material = MaterialEducativo::find($id);
         $cursos = Curso::all();
         $asignaturas = Asignatura::all();
-        $profesores = Usuario::where('TipoUsuarioID', 1)->get();
+        $profesores = User::where('TipoUsuarioID', 1)->get();
         $nivelesEducativos = NivelEducativo::all();
         $tiposArchivo = TipoArchivo::all();
 

@@ -27,6 +27,6 @@ class Respuesta extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class, 'UsuarioID');
+        return $this->belongsTo(User::class, 'UsuarioID');
     }
 }

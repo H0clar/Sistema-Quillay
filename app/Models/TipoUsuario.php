@@ -14,6 +14,6 @@ class TipoUsuario extends Model
 
     public function usuarios()
     {
-        return $this->hasMany(Usuario::class, 'TipoUsuarioID', 'TipoUsuarioID');
+        return $this->hasMany(User::class, 'TipoUsuarioID', 'TipoUsuarioID');
     }
 }

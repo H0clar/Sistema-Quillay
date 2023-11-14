@@ -37,9 +37,9 @@
                 <div class="input-group">
                     <select class="form-control log-filter-select" id="usuario" name="usuario">
                         <option value="" {{ !$usuarioFilter ? 'selected' : '' }}>Todos los Usuarios</option>
-                        @foreach($usuarios as $usuario)
-                            <option value="{{ $usuario->UsuarioID }}" {{ $usuarioFilter == $usuario->UsuarioID ? 'selected' : '' }}>
-                                {{ $usuario->Nombre }} {{ $usuario->Apellido }}
+                        @foreach($users as $user)
+                            <option value="{{ $user->UsuarioID }}" {{ $usuarioFilter == $user->UsuarioID ? 'selected' : '' }}>
+                                {{ $user->Nombre }} {{ $user->Apellido }}
                             </option>
                         @endforeach
                     </select>
@@ -139,8 +139,8 @@
                     <td>{{ $material->tipoArchivo->Tipo }}</td>
                     <td>{{ $material->NombreArchivo }}</td>
                     <td>
-                        @if ($material->usuario)
-                            {{ $material->usuario->Nombre }} {{ $material->usuario->Apellido }}
+                        @if ($material->user)
+                            {{ $material->user->Nombre }} {{ $material->user->Apellido }}
                         @else
                             N/A
                         @endif
