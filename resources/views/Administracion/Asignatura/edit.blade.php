@@ -5,7 +5,7 @@
         <h2 class="user-form-title">Editar Asignatura</h2>
 
         @if ($asignatura)
-        <form method="POST" action="{{ route('asignaturas.update', ['id' => $asignatura->AsignaturaID]) }}" class="user-form">
+        <form method="POST" action="{{ route('asignaturas.update', ['asignatura' => $asignatura->AsignaturaID]) }}" class="user-form">
             @csrf
             @method('PUT')
 

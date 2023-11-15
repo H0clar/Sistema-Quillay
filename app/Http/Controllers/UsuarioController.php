@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Usuario;;
 use App\Models\TipoUsuario;
 use App\Models\Asignatura;
 use App\Models\Log;
-
 use App\Models\MaterialEducativo;
-
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
     public function index()
     {
-        $users = User::with('tipoUsuario', 'asignatura')->get();
-        return view('Administracion.Usuario.index', compact('users')); // Cambiado de $usuarios a $users
+        $usuarios = Usuario::with('tipoUsuario', 'asignatura')->get();
+        return view('Administracion.Usuario.index', compact('usuarios'));
     }
-
 
     public function create()
     {
@@ -31,17 +28,19 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|max:50',
-            'apellido' => 'required|max:50',
+            'nombre_usuario' => 'required|max:50',
+            'apellido_usuario' => 'required|max:50',
             'tipo_usuario_id' => 'required|exists:TipoUsuario,TipoUsuarioID',
-            'rut' => 'required|max:20', // Validación para el nuevo campo Rut
+            'rut_usuario' => 'required|max:20',
+            'contrasena' => 'required|min:6', // Ajustar la regla según tus requisitos
         ]);
 
-        User::create([
-            'Nombre' => $request->input('nombre'),
-            'Apellido' => $request->input('apellido'),
-            'Rut' => $request->input('rut'), // Nuevo campo Rut
+        Usuario::create([
+            'NombreUsuario' => $request->input('nombre_usuario'),
+            'ApellidoUsuario' => $request->input('apellido_usuario'),
+            'RutUsuario' => $request->input('rut_usuario'),
             'TipoUsuarioID' => $request->input('tipo_usuario_id'),
+            'Contrasena' => bcrypt($request->input('contrasena')),
         ]);
 
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
@@ -49,28 +48,28 @@ class UsuarioController extends Controller
 
     public function edit($id)
     {
-        $user = User::find($id);
+        $usuario = Usuario::find($id);
         $tiposUsuario = TipoUsuario::all();
         $asignaturas = Asignatura::all();
 
-        return view('Administracion.Usuario.edit', compact('user', 'tiposUsuario', 'asignaturas'));
+        return view('Administracion.Usuario.edit', compact('usuario', 'tiposUsuario', 'asignaturas'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required|max:50',
-            'apellido' => 'required|max:50',
+            'nombre_usuario' => 'required|max:50',
+            'apellido_usuario' => 'required|max:50',
             'tipo_usuario_id' => 'required|exists:TipoUsuario,TipoUsuarioID',
         ]);
 
-        $user = User::find($id);
+        $usuario = Usuario::find($id);
 
-        if ($user) {
-            $user->Nombre = $request->input('nombre');
-            $user->Apellido = $request->input('apellido');
-            $user->TipoUsuarioID = $request->input('tipo_usuario_id');
-            $user->save();
+        if ($usuario) {
+            $usuario->NombreUsuario = $request->input('nombre_usuario');
+            $usuario->ApellidoUsuario = $request->input('apellido_usuario');
+            $usuario->TipoUsuarioID = $request->input('tipo_usuario_id');
+            $usuario->save();
             return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente.');
         } else {
             return redirect()->route('usuarios.index')->with('error', 'No se pudo encontrar el usuario a actualizar.');
@@ -79,9 +78,9 @@ class UsuarioController extends Controller
 
     public function destroy($id)
     {
-        $user = User::find($id);
+        $usuario = Usuario::find($id);
 
-        if ($user) {
+        if ($usuario) {
             // Eliminar registros relacionados en la tabla Log
             Log::where('UsuarioID', $id)->delete();
 
@@ -89,12 +88,11 @@ class UsuarioController extends Controller
             MaterialEducativo::where('UsuarioID', $id)->delete();
 
             // Ahora puedes eliminar el usuario
-            $user->delete();
+            $usuario->delete();
 
             return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
         } else {
             return redirect()->route('usuarios.index')->with('error', 'No se pudo encontrar el usuario a eliminar.');
         }
     }
-
 }

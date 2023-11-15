@@ -14,7 +14,7 @@ class Log extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'UsuarioID', 'UsuarioID');
+        return $this->belongsTo(Usuario::class, 'UsuarioID', 'UsuarioID');
     }
 
     public function material()

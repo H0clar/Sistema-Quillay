@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2 class="user-form-title">Editar Nivel Educativo</h2>
-    <form method="POST" action="{{ route('niveles.update', ['id' => $nivel->NivelEducativoID]) }}" class="user-form">
+    <form method="POST" action="{{ route('niveles.update', ['nivele' => $nivel->NivelEducativoID]) }}" class="user-form">
         @csrf
         @method('PUT')
 

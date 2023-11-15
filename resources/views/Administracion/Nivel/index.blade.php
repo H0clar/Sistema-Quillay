@@ -34,14 +34,15 @@
                     <td>{{ $nivel->Nombre }}</td>
                     <td>{{ $nivel->Abreviatura }}</td>
                     <td>
-                        <a href="{{ route('niveles.edit', ['id' => $nivel->NivelEducativoID]) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
+                        <a href="{{ route('niveles.edit', ['nivele' => $nivel->NivelEducativoID]) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
                         
                         <!-- Agrega el botón para eliminar utilizando un formulario -->
-                        <form action="{{ route('niveles.destroy', ['id' => $nivel->NivelEducativoID]) }}" method="POST" style="display: inline;">
+                        <form action="{{ route('niveles.destroy', ['nivele' => $nivel->NivelEducativoID]) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm user-delete" onclick="return confirm('¿Estás seguro de eliminar este nivel educativo?')">Eliminar</button>
                         </form>
+                        
                     </td>
                 </tr>
             @endforeach

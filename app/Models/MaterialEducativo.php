@@ -3,17 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+
 use Illuminate\Database\Eloquent\Model;
 
 class MaterialEducativo extends Model
 {
-    use HasFactory;
-
-    protected $table = 'material_educativo';
-    public $timestamps = false;
-
-
+    protected $table = 'Material_Educativo';
     protected $primaryKey = 'MaterialID';
+    public $timestamps = false;
 
     protected $fillable = [
         'TipoArchivoID',
@@ -29,8 +27,10 @@ class MaterialEducativo extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'UsuarioID', 'UsuarioID');
+        return $this->belongsTo(Usuario::class, 'UsuarioID', 'UsuarioID');
     }
+
+
 
     public function asignatura()
     {
@@ -51,4 +51,10 @@ class MaterialEducativo extends Model
     {
         return $this->belongsTo(TipoArchivo::class, 'TipoArchivoID', 'TipoArchivoID');
     }
+
+    public function log()
+    {
+        return $this->hasMany(Log::class);
+    }
+
 }

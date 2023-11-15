@@ -8,18 +8,18 @@
         @csrf
 
         <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre" class="form-control" required>
+            <label for="nombre_usuario">Nombre:</label>
+            <input type="text" name="nombre_usuario" id="nombre_usuario" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label for="apellido">Apellido:</label>
-            <input type="text" name="apellido" id="apellido" class="form-control" required>
+            <label for="apellido_usuario">Apellido:</label>
+            <input type="text" name="apellido_usuario" id="apellido_usuario" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label for="rut">Rut:</label>
-            <input type="text" name="rut" id="rut" class="form-control" required>
+            <label for="rut_usuario">Rut:</label>
+            <input type="text" name="rut_usuario" id="rut_usuario" class="form-control" required>
         </div>
 
         <div class="form-group">
@@ -29,6 +29,11 @@
                     <option value="{{ $tipo->TipoUsuarioID }}">{{ $tipo->Tipo }}</option>
                 @endforeach
             </select>
+        </div>
+
+        <div class="form-group">
+            <label for="contrasena">Contraseña:</label>
+            <input type="password" name="contrasena" id="contrasena" class="form-control" required>
         </div>
 
         <button type="submit" class="btn btn-primary user-form-button">Guardar Usuario</button>

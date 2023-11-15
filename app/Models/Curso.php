@@ -25,4 +25,5 @@ class Curso extends Model
     {
         return $this->belongsTo(NivelEducativo::class, 'NivelEducativoID', 'NivelEducativoID');
     }
+
 }

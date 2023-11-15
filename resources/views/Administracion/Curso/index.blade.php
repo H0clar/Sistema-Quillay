@@ -33,17 +33,25 @@
                     <tr>
                         <td>{{ $curso->CursoID }}</td>
                         <td>{{ $curso->Nombre }}</td>
-                        <td>{{ $curso->nivelEducativo->Nombre }} ({{ $curso->nivelEducativo->Abreviatura }})</td> <!-- Muestra el nombre y abreviatura del nivel educativo -->
+                        <td>
+                            @if($curso->nivelEducativo)
+                                {{ $curso->nivelEducativo->Nombre }} ({{ $curso->nivelEducativo->Abreviatura }})
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        
                         <td>{{ $curso->Abreviatura }}</td>
                         <td>
-                            <a href="{{ route('cursos.edit', ['id' => $curso->CursoID]) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
+                            <a href="{{ route('cursos.edit', ['curso' => $curso->CursoID]) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
                             
                             <!-- Agrega el botón para eliminar utilizando un formulario -->
-                            <form action="{{ route('cursos.destroy', ['id' => $curso->CursoID]) }}" method="POST" style="display: inline;">
+                            <form action="{{ route('cursos.destroy', ['curso' => $curso->CursoID]) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm user-delete" onclick="return confirm('¿Estás seguro de eliminar este curso?')">Eliminar</button>
                             </form>
+                            
                         </td>
                     </tr>
                 @endforeach

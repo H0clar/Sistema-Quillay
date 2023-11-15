@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\MaterialEducativo;
 use App\Models\Curso;
 use App\Models\Asignatura;
-use App\Models\User;
+use App\Models\Usuario;
 use App\Models\NivelEducativo;
 use App\Models\TipoArchivo;
-use App\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
@@ -18,14 +17,14 @@ class MaterialController extends Controller
     public function index(Request $request)
     {
         $tipoArchivoFilter = $request->input('tipoArchivo');
-        $usuarioFilter = $request->input('user');
+        $usuarioFilter = $request->input('usuario');
         $asignaturaFilter = $request->input('asignatura');
         $nivelEducativoFilter = $request->input('nivelEducativo');
         $cursoFilter = $request->input('curso');
-        $fechaFilter = $request->input('fecha'); // Agregamos la variable para el filtro de fecha
+        $fechaFilter = $request->input('fecha');
 
         $tiposArchivo = TipoArchivo::all();
-        $users = User::all();
+        $usuarios = Usuario::all();
         $asignaturas = Asignatura::all();
         $nivelesEducativos = NivelEducativo::all();
         $cursos = Curso::all();
@@ -60,27 +59,19 @@ class MaterialController extends Controller
 
         $materiales = $query->get();
 
-        return view('Administracion.Material.index', compact('materiales', 'tiposArchivo', 'tipoArchivoFilter', 'users', 'usuarioFilter', 'asignaturas', 'asignaturaFilter', 'nivelesEducativos', 'nivelEducativoFilter', 'cursos', 'cursoFilter', 'fechaFilter'));
+        return view('Administracion.Material.index', compact('materiales', 'tiposArchivo', 'tipoArchivoFilter', 'usuarios', 'usuarioFilter', 'asignaturas', 'asignaturaFilter', 'nivelesEducativos', 'nivelEducativoFilter', 'cursos', 'cursoFilter', 'fechaFilter'));
     }
-
-
-
-
-
-
-
 
     public function create()
     {
         $cursos = Curso::all();
         $asignaturas = Asignatura::all();
-        $profesores = User::where('TipoUsuarioID', 1)->get();
+        $profesores = Usuario::where('TipoUsuarioID', 1)->get();
         $nivelesEducativos = NivelEducativo::all();
         $tiposArchivo = TipoArchivo::all();
 
         return view('Administracion.Material.create', compact('cursos', 'asignaturas', 'profesores', 'nivelesEducativos', 'tiposArchivo'));
     }
-
 
     public function store(Request $request)
     {
@@ -108,7 +99,7 @@ class MaterialController extends Controller
             'NivelEducativoID' => $request->input('NivelEducativoID'),
             'Estado' => $estado,
             'RutaGoogleDrive' => 'storage/' . $nombreDelArchivoGuardado,
-            'FechaSubida' => now()->format('Y-m-d'), // Utiliza la función now() para obtener la fecha actual
+            'FechaSubida' => now()->format('Y-m-d'),
         ]);
 
         $material->save();
@@ -116,16 +107,11 @@ class MaterialController extends Controller
         return redirect()->route('materiales.index')->with('success', 'Material educativo agregado correctamente.');
     }
 
-
-
-
     public function destroy($id)
     {
         $material = MaterialEducativo::find($id);
 
         if ($material) {
-            // Asegúrate de que el campo Estado sea de tipo booleano
-            // y asigna un valor booleano en lugar de una cadena
             $material->Estado = false;
             $material->save();
 
@@ -135,16 +121,12 @@ class MaterialController extends Controller
         }
     }
 
-
-
-
-
     public function edit($id)
     {
         $material = MaterialEducativo::find($id);
         $cursos = Curso::all();
         $asignaturas = Asignatura::all();
-        $profesores = User::where('TipoUsuarioID', 1)->get();
+        $profesores = Usuario::where('TipoUsuarioID', 1)->get();
         $nivelesEducativos = NivelEducativo::all();
         $tiposArchivo = TipoArchivo::all();
 
@@ -219,7 +201,4 @@ class MaterialController extends Controller
 
         return response()->json($asignaturas);
     }
-
-    
-    
 }

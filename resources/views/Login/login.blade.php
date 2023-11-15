@@ -1,18 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ config('app.name', 'Laravel') }} - Login</title>
-
-    <!-- Enlace a tu archivo CSS personalizado -->
-    <link rel="stylesheet" href="{{ asset('assets/cssNivel/styleNivel.css') }}">
-
-    <!-- Bootstrap CSS u otros estilos que desees incluir -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-    <!-- Otros elementos head como meta etiquetas, favicon, etc. -->
-
+    <!-- Tus encabezados aquí -->
 </head>
 <body>
     <div class="container">
@@ -21,44 +10,31 @@
                 <div class="card">
                     <div class="card-header">{{ __('Login') }}</div>
                     <div class="card-body">
-                        <div class="form-group mt-4">
-                            <a href="{{ route('login.google') }}" class="btn btn-danger btn-block">
-                                Iniciar sesión con Google
-                            </a>
-                        </div>
-
-                        <!-- Agrega estos campos al formulario existente -->
+                        <!-- Formulario de inicio de sesión actualizado -->
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
+                            
                             <div class="form-group">
-                                <label for="email">{{ __('E-Mail Address') }}</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                @error('email')
+                                <label for="CorreoElectronico">{{ __('Correo Electrónico') }}</label>
+                                <input id="CorreoElectronico" type="email" class="form-control @error('email') is-invalid @enderror" name="CorreoElectronico" value="{{ old('CorreoElectronico') }}" required autocomplete="email" autofocus>
+                                @error('CorreoElectronico')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
-
+                            
                             <div class="form-group">
-                                <label for="password">{{ __('Password') }}</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                                @error('password')
+                                <label for="Contrasena">{{ __('Contraseña') }}</label>
+                                <input id="Contrasena" type="password" class="form-control @error('password') is-invalid @enderror" name="Contrasena" required autocomplete="current-password">
+                                @error('Contrasena')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
-                            <!-- ... Otros campos ... -->
-
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
+                            
+                            <!-- Resto del formulario -->
 
                             <div class="form-group mb-0">
                                 <button type="submit" class="btn btn-primary">
@@ -69,6 +45,9 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                
+                                <!-- Agrega el enlace para iniciar sesión con Google -->
+                                <a href="{{ route('login.google') }}" class="btn btn-danger">Login with Google</a>
                             </div>
                         </form>
                     </div>

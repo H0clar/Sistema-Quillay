@@ -36,7 +36,7 @@
             <select class="form-control" id="ProfesorID" name="ProfesorID" required>
                 <option value="" disabled selected>Seleccione un profesor</option>
                 @foreach($profesores as $profesor)
-                    <option value="{{ $profesor->UsuarioID }}">{{ $profesor->Nombre }}</option>
+                    <option value="{{ $profesor->UsuarioID }}">{{ $profesor->NombreUsuario }}</option>
                 @endforeach
             </select>
         </div>

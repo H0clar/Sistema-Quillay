@@ -20,12 +20,16 @@
                         <td>{{ $asignatura->AsignaturaID }}</td>
                         <td>{{ $asignatura->Nombre }}</td>
                         <td>
-                            <a href="{{ route('asignaturas.edit', ['id' => $asignatura->AsignaturaID]) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
-                            <form action="{{ route('asignaturas.destroy', ['id' => $asignatura->AsignaturaID]) }}" method="POST" style="display: inline;">
+                            <a href="{{ route('asignaturas.edit', ['asignatura' => $asignatura->AsignaturaID]) }}" class="btn btn-primary btn-sm user-edit">Editar</a>
+                            <form action="{{ route('asignaturas.destroy', ['asignatura' => $asignatura->AsignaturaID]) }}" method="POST" style="display: inline;">
+
                                 @csrf
                                 @method('DELETE')
+                            
                                 <button type="submit" class="btn btn-danger btn-sm user-delete" onclick="return confirm('¿Estás seguro de eliminar esta asignatura?')">Eliminar</button>
+                            
                             </form>
+                            
                         </td>
                     </tr>
                 @endforeach

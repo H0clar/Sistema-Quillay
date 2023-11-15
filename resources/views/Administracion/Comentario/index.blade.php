@@ -21,7 +21,7 @@
                 <tr>
                     <td>{{ $comentario->ComentarioID }}</td>
                     <td>{{ $comentario->material->NombreArchivo }} ({{ $comentario->material->TipoArchivo->Tipo }})</td>
-                    <td>{{ $comentario->usuario->Nombre }} {{ $comentario->usuario->Apellido }}</td>
+                    <td>{{ $comentario->usuario->NombreUsuario }} {{ $comentario->usuario->UsuarioApellido }}</td>
                     <td>{{ $comentario->Comentario }}</td>
                     <td>
                         @if ($comentario->respuestas->count() > 0)
