@@ -1,0 +1,120 @@
+/* Estilos globales */
+html, body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    height: 100%;
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 100% del viewport height */
+    background-color: #628C1A; /* Color de la empresa */
+}
+
+/* header */
+header {
+    background-color: #628C1A;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-icons {
+    display: flex;
+    margin-left: 10px;
+}
+
+.icon-container {
+    margin-left: 30px;
+}
+
+/* Ajustar el margen izquierdo del texto "Cerrar Sesión" */
+.logout {
+    margin-left: 10px;
+}
+
+/* Contenedor del formulario de inicio de sesión */
+.card {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Ancho fijo */
+}
+
+/* Estilos para el formulario de inicio de sesión */
+form {
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background-color: #628C1A;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #4A7510;
+}
+
+.btn-link {
+    color: #628C1A;
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+.btn-danger {
+    background-color: #628C1A;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #4A7510;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .icon-container {
+        margin-left: 10px;
+    }
+}

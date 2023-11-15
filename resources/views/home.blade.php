@@ -16,22 +16,23 @@
             <div class="row justify-content-center align-items-center">
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-body">
-                            <h3 class="text-center mb-4">Bienvenido al Sistema de Control Administrativo de Información Intranet</h3>
-
-                            <div class="text-center">
-                                <i class="fas fa-5x fa-user-circle"></i>
-                            </div>
-
-                            <p class="text-center mt-4">
-                                ¡Felicitaciones! Has iniciado sesión en el sistema. Aquí podrás administrar las diferentes ventanas de control interno de la aplicación de manera eficiente y segura.
-                            </p>
+                        <div class="card-body text-center">
 
                             @if (session('status'))
                                 <div class="alert alert-success mt-4" role="alert">
                                     {{ session('status') }}
                                 </div>
                             @endif
+
+                            @if (session('user_info'))
+                                <h3 class="mb-4">Bienvenido, {{ session('user_info')['nombreUsuario'] }} {{ session('user_info')['apellidoUsuario'] }}!</h3>
+                                <i class="fas fa-5x fa-user-circle"></i>
+                                <p>
+                                    Tipo de Usuario: {{ session('user_info')['tipoUsuario'] }}<br>
+                                    ¡Bienvenido(a) {{ session('user_info')['tipoUsuario'] }} {{ session('user_info')['nombreUsuario'] }} {{ session('user_info')['apellidoUsuario'] }}! Aquí podrás administrar las diferentes ventanas de control interno de la aplicación de manera eficiente y segura.
+                                </p>
+                            @endif
+
                         </div>
                     </div>
                 </div>

@@ -42,6 +42,13 @@ class LoginController extends Controller
             Auth::login($newUser);
         }
 
+        // Guardar información adicional en la sesión
+        session(['user_info' => [
+            'nombre' => Auth::user()->NombreUsuario,
+            'apellido' => Auth::user()->ApellidoUsuario,
+            'rol' => Auth::user()->rol,  
+        ]]);
+
         return redirect()->route('home');
     }
 
@@ -53,6 +60,17 @@ class LoginController extends Controller
             if ($user && Hash::check($request->input('Contrasena'), $user->Contrasena)) {
                 // Contraseña válida, procede con la autenticación
                 Auth::login($user);
+
+                // Obtener el nombre del tipo de usuario
+                $tipoUsuario = $user->tipoUsuario->Tipo;
+
+                // Establece la información del usuario en la sesión
+                session(['user_info' => [
+                    'nombreUsuario' => $user->NombreUsuario,
+                    'apellidoUsuario' => $user->ApellidoUsuario,
+                    'tipoUsuario' => $tipoUsuario,
+                ]]);
+
                 return redirect()->route('home');
             } else {
                 // Contraseña incorrecta, redirige al formulario de inicio de sesión con un mensaje de error
@@ -63,6 +81,7 @@ class LoginController extends Controller
         // Lógica para mostrar la vista de inicio de sesión para solicitudes GET
         return view('Login.login');
     }
+
 
 
     public function logout()
