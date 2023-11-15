@@ -1,29 +1,31 @@
--- Crear tabla TipoUsuario
+    -- Crear tabla TipoUsuario
 CREATE TABLE TipoUsuario (
     TipoUsuarioID INT AUTO_INCREMENT PRIMARY KEY,
     Tipo VARCHAR(50)
 );
 
--- Insertar tipos de usuario
+    -- Insertar tipos de usuario
 INSERT INTO TipoUsuario (Tipo) VALUES 
     ('Profesor'),
     ('Trabajador_UTP'),
     ('Administrador');
 
--- Crear tabla Nivel_Educativo
+    -- Crear tabla Nivel_Educativo
 CREATE TABLE Nivel_Educativo (
     NivelEducativoID INT AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(255),
     Abreviatura VARCHAR(10)
 );
 
--- Insertar niveles educativos
+    -- Insertar niveles educativos
 INSERT INTO Nivel_Educativo (Nombre, Abreviatura) VALUES
     ('Nivel 1 EDUCACION ESPECIAL TRASTORNOS ESPECIFICOS DEL LENGUAJE', 'N1'),
     ('Nivel 2 EDUCACION PARVULARIA', 'N2'),
     ('Nivel 3 ENSEÑANZA BÁSICA', 'N3');
 
--- Crear tabla Cursos
+
+
+    -- Crear tabla Cursos
 CREATE TABLE Cursos (
     CursoID INT AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(50),
@@ -31,7 +33,7 @@ CREATE TABLE Cursos (
     Abreviatura VARCHAR(10)
 );
 
--- Insertar cursos
+    -- Insertar cursos
 INSERT INTO Cursos (Nombre, NivelEducativoID, Abreviatura) VALUES
     ('Medio mayor', 1, 'MM'), 
     ('Primer nivel de transición (prekinder)', 1, 'NT1'), 
@@ -47,15 +49,19 @@ INSERT INTO Cursos (Nombre, NivelEducativoID, Abreviatura) VALUES
     ('Séptimo básico', 3, '7B'), 
     ('Octavo básico', 3, '8B');
 
--- Crear tabla Asignatura
+    -- Crear tabla Asignatura
 CREATE TABLE Asignatura (
     AsignaturaID INT AUTO_INCREMENT PRIMARY KEY,
     Nombre VARCHAR(50),
     CursoID INT
 );
 
--- Insertar asignaturas
+    --insertar asignaturas
+
+
 INSERT INTO Asignatura (Nombre, CursoID) VALUES 
+
+    
     ('Comunicación integral', 1),
     ('Formación Personal y social', 1),
     ('Integración y Comprensión con el Entorno', 1),
@@ -189,48 +195,52 @@ INSERT INTO Asignatura (Nombre, CursoID) VALUES
     ('Taller Matematicas', 13),
     ('Tecnologia', 13);
 
--- Crear tabla Tipo_Cambio
+
+
+
+    -- Crear tabla Tipo_Cambio
 CREATE TABLE Tipo_Cambio (
     TipoCambioID INT AUTO_INCREMENT PRIMARY KEY,
     TipoCambio VARCHAR(50)
 );
 
--- Insertar tipos de cambio posibles
+    -- Insertar tipos de cambio posibles
 INSERT INTO Tipo_Cambio (TipoCambio) VALUES 
     ('Inserción'),
     ('Actualización'),
     ('Eliminación');
 
--- Crear tabla Usuario
+    -- Crear tabla Usuario
 CREATE TABLE Usuario (
     UsuarioID INT AUTO_INCREMENT PRIMARY KEY,
-    Nombre VARCHAR(50),
-    Apellido VARCHAR(50),
+    NombreUsuario VARCHAR(50),
+    ApellidoUsuario VARCHAR(50),
     CorreoElectronico VARCHAR(100),
-    Rut VARCHAR(20),
+    RutUsuario VARCHAR(20),
     TipoUsuarioID INT,
+    Contrasena VARCHAR(255),
     FOREIGN KEY (TipoUsuarioID) REFERENCES TipoUsuario(TipoUsuarioID) ON DELETE CASCADE
 );
 
--- Insertar usuarios
-INSERT INTO Usuario (Nombre, Apellido, Rut, TipoUsuarioID) VALUES
-    ('Juan', 'Perez', '12345678-9', 1),
-    ('Pedro', 'Gonzalez', '12345678-9', 2),
-    ('Maria', 'Lopez', '12345678-9', 3);
+    -- Insertar usuarios
+INSERT INTO Usuario (NombreUsuario, ApellidoUsuario, CorreoElectronico, RutUsuario, TipoUsuarioID, Contrasena) VALUES
+    ('Juan', 'Perez', 'example@gmail.com', '12345678-9', 1, '123456'),
+    ('Pedro', 'Gonzalez', 'example@gmail.com', '22222222-2', 2, '123456'),
+    ('Maria', 'Lopez', 'example@gmail.com', '33333333-3', 3, '123456');
 
--- Crear tabla TipoArchivo
+    -- Crear tabla TipoArchivo
 CREATE TABLE TipoArchivo (
     TipoArchivoID INT AUTO_INCREMENT PRIMARY KEY,
     Tipo VARCHAR(50)
 );
 
--- Insertar tipos de archivo
+    -- Insertar tipos de archivo
 INSERT INTO TipoArchivo (Tipo) VALUES 
     ('Guías'),
     ('Informes'),
     ('Pruebas');
 
--- Crear tabla Material_Educativo
+    -- Crear tabla Material_Educativo
 CREATE TABLE Material_Educativo (
     MaterialID INT AUTO_INCREMENT PRIMARY KEY,
     TipoArchivoID INT,
@@ -249,13 +259,17 @@ CREATE TABLE Material_Educativo (
     FOREIGN KEY (NivelEducativoID) REFERENCES Nivel_Educativo(NivelEducativoID)
 );
 
--- Insertar datos de prueba en la tabla Material_Educativo
+
+
+
+
+    -- Insertar datos de prueba en la tabla Material_Educativo
 INSERT INTO Material_Educativo (TipoArchivoID, NombreArchivo, UsuarioID, AsignaturaID, CursoID, NivelEducativoID, Estado, RutaGoogleDrive, FechaSubida) VALUES 
     (1, 'N1_MM_Comunicación_integral_pdf_1.pdf', 1, 1, 1, 1, TRUE, 'ASDAS', '2023-10-06'),
     (2, 'N1_MM_Comunicación_integral_pdf_2.pdf', 2, 1, 1, 1, TRUE, 'ASDAS', '2023-10-07'),
     (3, 'N1_MM_Comunicación_integral_pdf_3.pdf', 3, 1, 1, 1, TRUE, 'ASDAS', '2023-10-08');
 
--- Crear tabla Log para registro de cambios
+    -- Crear tabla Log para registro de cambios
 CREATE TABLE Log (
     LogID INT AUTO_INCREMENT PRIMARY KEY,
     UsuarioID INT,
@@ -267,7 +281,7 @@ CREATE TABLE Log (
     FOREIGN KEY (TipoCambioID) REFERENCES Tipo_Cambio(TipoCambioID)
 );
 
--- Crear tabla Comentario
+    -- Crear tabla Comentario
 CREATE TABLE Comentario (
     ComentarioID INT AUTO_INCREMENT PRIMARY KEY,
     MaterialID INT,
@@ -278,14 +292,14 @@ CREATE TABLE Comentario (
     FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID)
 );
 
--- Insertar datos de prueba en la tabla Comentario
+    -- Insertar datos de prueba en la tabla Comentario
 INSERT INTO Comentario (MaterialID, UsuarioID, Comentario, FechaComentario)
 VALUES
     (1, 1, 'Comentario 1', '2023-10-06'),
     (2, 2, 'Comentario 2', '2023-10-07'),
     (3, 3, 'Comentario 3', '2023-10-08');
 
--- Crear tabla Respuesta
+    -- Crear tabla Respuesta
 CREATE TABLE Respuesta (
     RespuestaID INT AUTO_INCREMENT PRIMARY KEY,
     ComentarioID INT,
@@ -296,7 +310,7 @@ CREATE TABLE Respuesta (
     FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID)
 );
 
--- Insertar datos de prueba en la tabla Respuesta
+    -- Insertar datos de prueba en la tabla Respuesta
 INSERT INTO Respuesta (ComentarioID, UsuarioID, Respuesta, FechaRespuesta)
 VALUES
     (1, 1, 'Respuesta 1', '2023-10-06'),
@@ -318,7 +332,7 @@ VALUES
 
 
 
-
+    --trigger del nombre del archivo (material educativo)--
 
 DELIMITER //
 
@@ -354,11 +368,13 @@ BEGIN
     WHERE T.TipoArchivoID = NEW.TipoArchivoID;
 
     -- Contar la cantidad de archivos con el mismo nombre y fecha
-    SELECT COUNT(*) INTO CantidadArchivosMismoDia
-    FROM Material_Educativo
-    WHERE FechaSubida = FechaArchivo
-    AND TipoArchivoID = NEW.TipoArchivoID
-    AND UsuarioID = NEW.UsuarioID;
+    SET CantidadArchivosMismoDia = (
+        SELECT COUNT(*)
+        FROM Material_Educativo
+        WHERE FechaSubida = FechaArchivo
+        AND TipoArchivoID = NEW.TipoArchivoID
+        AND UsuarioID = NEW.UsuarioID
+    );
 
     -- Establecer el nombre del archivo
     SET NEW.NombreArchivo = CONCAT(NivelAbreviatura, '_', CursoAbreviatura, '_', AsignaturaNombre, '_', TipoArchivo, '_', CantidadArchivosMismoDia + 1, '.pdf');
@@ -381,16 +397,26 @@ DELIMITER ;
 
 
 
+
+
+
+
+    --cambios en la tabla material educativo--
+
+
 DELIMITER //
+
 CREATE TRIGGER Material_Educativo_AI 
 AFTER INSERT ON Material_Educativo 
 FOR EACH ROW
 BEGIN
     -- Registro de inserción en la tabla Log
     INSERT INTO Log (UsuarioID, MaterialID, TipoCambioID, FechaCambio)
-    VALUES (NEW.UsuarioID, NEW.MaterialID, 1, CURDATE());
+    VALUES (NEW.UsuarioID, LAST_INSERT_ID(), 1, CURDATE());
 END;
+
 //
+
 CREATE TRIGGER Material_Educativo_AU 
 AFTER UPDATE ON Material_Educativo 
 FOR EACH ROW
@@ -399,7 +425,9 @@ BEGIN
     INSERT INTO Log (UsuarioID, MaterialID, TipoCambioID, FechaCambio)
     VALUES (NEW.UsuarioID, NEW.MaterialID, 2, CURDATE());
 END;
+
 //
+
 CREATE TRIGGER Material_Educativo_AD 
 AFTER DELETE ON Material_Educativo 
 FOR EACH ROW
@@ -408,7 +436,9 @@ BEGIN
     INSERT INTO Log (UsuarioID, MaterialID, TipoCambioID, FechaCambio)
     VALUES (OLD.UsuarioID, OLD.MaterialID, 3, CURDATE());
 END;
+
 //
+
 DELIMITER ;
 
 
@@ -420,7 +450,15 @@ DELIMITER ;
 
 
 
--- Crear trigger para generar correo electrónico del usuario
+
+
+
+
+
+
+
+
+    -- Crear trigger para generar correo electrónico del usuario
 DELIMITER //
 CREATE TRIGGER generar_correo_usuario
 BEFORE INSERT ON Usuario
@@ -432,7 +470,7 @@ BEGIN
     SET anio_actual = YEAR(CURDATE());
 
     -- Generar correo con las dos primeras letras del nombre, apellido y año actual
-    SET NEW.CorreoElectronico = CONCAT(LEFT(NEW.Nombre, 2), NEW.Apellido, anio_actual, '@colegioelquillay.com');
+    SET NEW.CorreoElectronico = CONCAT(LEFT(NEW.NombreUsuario, 2), NEW.ApellidoUsuario, anio_actual, '@colegioelquillay.com');
 END;
 //
 DELIMITER ;
@@ -445,7 +483,14 @@ DELIMITER ;
 
 
 
-    --trigger de control de mayuscula de nombre, apellido y rut del usuario--
+
+
+
+
+
+
+
+    --trigger de control de mayúscula de nombre, apellido y rut del usuario--
 DELIMITER //
 
 CREATE TRIGGER antes_de_insertar_usuario
@@ -458,10 +503,11 @@ BEGIN
     END IF;
 
     -- Formatear el nombre y el apellido con mayúscula en la primera letra
-    SET NEW.Nombre = CONCAT(UCASE(LEFT(NEW.Nombre, 1)), LCASE(SUBSTRING(NEW.Nombre, 2)));
-    SET NEW.Apellido = CONCAT(UCASE(LEFT(NEW.Apellido, 1)), LCASE(SUBSTRING(NEW.Apellido, 2)));
+    SET NEW.NombreUsuario = CONCAT(UPPER(LEFT(NEW.NombreUsuario, 1)), LCASE(SUBSTRING(NEW.NombreUsuario, 2)));
+    SET NEW.ApellidoUsuario = CONCAT(UPPER(LEFT(NEW.ApellidoUsuario, 1)), LCASE(SUBSTRING(NEW.ApellidoUsuario, 2)));
 END;
 
 -- Restaurar el delimitador original
 //
 DELIMITER ;
+
