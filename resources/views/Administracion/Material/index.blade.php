@@ -11,9 +11,6 @@
         <form method="GET" action="{{ route('materiales.index') }}" class="form-inline">
             @csrf
 
-
-
-
             <div class="form-group ml-2">
                 <label for="tipoArchivo" class="log-filter-label">Filtrar por Tipo de Archivo:</label>
                 <div class="input-group">
@@ -24,7 +21,6 @@
                                 {{ $tipo->Tipo }}
                             </option>
                         @endforeach
-
                     </select>
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-primary">Filtrar</button>
@@ -39,7 +35,7 @@
                         <option value="" {{ !$usuarioFilter ? 'selected' : '' }}>Todos los Usuarios</option>
                         @foreach($usuarios as $usuario)
                             <option value="{{ $usuario->UsuarioID }}" {{ $usuarioFilter == $usuario->UsuarioID ? 'selected' : '' }}>
-                                {{ $usuario->NombreUsuario }} {{ $usuario->ApellidoApellido }}
+                                {{ $usuario->NombreUsuario }} {{ $usuario->ApellidoUsuario }}
                             </option>
                         @endforeach
                     </select>
@@ -52,7 +48,7 @@
             <div class="form-group ml-2">
                 <label for="nivelEducativo" class="log-filter-label">Filtrar por Nivel Educativo:</label>
                 <div class="input-group">
-                    <select class="form-control log-filter-select" id="nivelEducativo" name="nivelEducativo">
+                    <select class="form-control log-filter-select" id="nivelEducativo" name="nivelEducativo" onchange="cargarCursos()">
                         <option value="" {{ !$nivelEducativoFilter ? 'selected' : '' }}>Todos los Niveles Educativos</option>
                         @foreach($nivelesEducativos as $nivel)
                             <option value="{{ $nivel->NivelEducativoID }}" {{ $nivelEducativoFilter == $nivel->NivelEducativoID ? 'selected' : '' }}>
@@ -71,20 +67,13 @@
                 <div class="input-group">
                     <select class="form-control log-filter-select" id="curso" name="curso">
                         <option value="" {{ !$cursoFilter ? 'selected' : '' }}>Todos los Cursos</option>
-                        @foreach($cursos as $curso)
-                            <option value="{{ $curso->CursoID }}" {{ $cursoFilter == $curso->CursoID ? 'selected' : '' }}>
-                                {{ $curso->Nombre }}
-                            </option>
-                        @endforeach
+                        {{-- Las opciones de cursos se cargarán dinámicamente mediante JavaScript --}}
                     </select>
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-primary">Filtrar</button>
                     </div>
                 </div>
             </div>
-            
-            
-
 
             <div class="form-group ml-2">
                 <label for="asignatura" class="log-filter-label">Filtrar por Asignatura:</label>
@@ -183,3 +172,55 @@
     </table>
 </div>
 @endsection
+
+<script>
+    function cargarCursos() {
+        var nivelEducativoID = document.getElementById('nivelEducativo').value;
+        var cursoSelect = document.getElementById('curso');
+    
+        // Realiza una solicitud AJAX para obtener los cursos
+        $.ajax({
+            url: '/cursos-por-nivel-educativo/' + nivelEducativoID,
+            type: 'GET',
+            success: function (response) {
+                // Limpiar y actualizar el selector de cursos
+                cursoSelect.innerHTML = '<option value="">Todos los Cursos</option>';
+                for (var cursoID in response) {
+                    cursoSelect.innerHTML += '<option value="' + cursoID + '">' + response[cursoID] + '</option>';
+                }
+    
+                // Llama a la función cargarAsignaturas al seleccionar un curso
+                cursoSelect.addEventListener('change', function () {
+                    cargarAsignaturas();
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    
+    function cargarAsignaturas() {
+        var cursoID = document.getElementById('curso').value;
+        var asignaturaSelect = document.getElementById('asignatura');
+    
+        // Realiza una solicitud AJAX para obtener las asignaturas
+        $.ajax({
+            url: '/asignaturas-por-curso/' + cursoID, // Asegúrate de tener la ruta correcta en web.php
+            type: 'GET',
+            success: function (response) {
+                // Limpiar y actualizar el selector de asignaturas
+                asignaturaSelect.innerHTML = '<option value="">Todas las Asignaturas</option>';
+                for (var i = 0; i < response.length; i++) {
+                    asignaturaSelect.innerHTML += '<option value="' + response[i].AsignaturaID + '">' + response[i].Nombre + '</option>';
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    
+    
+    
+</script>

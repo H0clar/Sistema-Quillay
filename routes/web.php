@@ -55,19 +55,11 @@ Route::resource('respuestas', RespuestaController::class);
 // Rutas para la gestión de cambios
 Route::resource('cambios', CambioController::class);
 
-
 // Rutas para la gestión de notificaciones
 Route::get('/notificaciones', [NotificacionesController::class, 'index'])->name('notificaciones.index');
-
-
-
-
-
-
 
 // Rutas para obtener cursos y asignaturas mediante AJAX
 Route::get('/cursos-por-nivel-educativo/{nivelEducativoID}', [MaterialController::class, 'getCursosByNivelEducativo']);
 Route::get('/asignaturas-por-curso/{cursoID}', [MaterialController::class, 'getAsignaturasByCurso']);
 Route::get('/asignaturas-por-profesor/{profesorID}', [MaterialController::class, 'getAsignaturasByProfesor']);
 Route::get('/cursos-por-profesor/{profesorID}', [MaterialController::class, 'getCursosByProfesor']);
-

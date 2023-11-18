@@ -28,6 +28,7 @@ class MaterialController extends Controller
         $asignaturas = Asignatura::all();
         $nivelesEducativos = NivelEducativo::all();
         $cursos = Curso::all();
+        
 
         $query = MaterialEducativo::with('usuario', 'asignatura', 'curso', 'nivelEducativo', 'tipoArchivo');
 
@@ -190,10 +191,13 @@ class MaterialController extends Controller
 
     public function getCursosByNivelEducativo($nivelEducativoID)
     {
-        $cursos = Curso::where('NivelEducativoID', $nivelEducativoID)->get();
+        $cursos = Curso::where('NivelEducativoID', $nivelEducativoID)->pluck('Nombre', 'CursoID');
 
         return response()->json($cursos);
     }
+
+
+
 
     public function getAsignaturasByCurso($cursoID)
     {
@@ -201,4 +205,7 @@ class MaterialController extends Controller
 
         return response()->json($asignaturas);
     }
+
+    
+
 }
