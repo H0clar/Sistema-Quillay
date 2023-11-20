@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "quillay-405022",
+  "private_key_id": "44bc32b44bbdd679179c4ec42c4d5701354ed1a2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDqk9Ujk1zjXANi\ngylZDHZNcoUvArAj/e/q3U5YdeeoU/uRn6KV5F7IIg2CHN0GW9+sLc0IsMzLairf\nSveBOnJ0zsVPE8BvDAVKQyN6K75AC/ezKL6RRxbUS2evRctkmIAVKgL6z+dCVnyM\nj31btv2eseNVi4oE1lheWnAiTaeRzPow0Qhpi65tU/q3UmVa8fb5YJEURbU2HeHQ\nZBG5WdDqTec/XTeT/SuEyEtdXluqanX/BsR9sA7TJRw2rJ4unbFDD0klhZhcIae6\nnBhhIim+7ajtLCofBqTLfPgug1GrJimFIzXV4nc6uIWSfOp+w7IWB1mRhysGz5nC\nUth+xGTxAgMBAAECggEAALI4nzboPyp+PhQaks+VKEyvNYECCdFOnXlTqrKK4faB\n2CBLqLs5RsnHFXxFcafjJY0rPxvbN71UbD46NtF4Fn2omz/5Qbsc5ugFGm83zNPc\nQ9Van27BFBc3Mw93d5B2TNnHkXv9eTZtfzNL0XJdFVP80zurSLFkKL+G9qsZVLbw\nEMe326/v2sa1jG+5YEu+KcHAxl1ifzMdxiQzFq0WmZMPjAavXPKd8DqM2fuAiaiG\noRVGfRsdqsm57UUH5H4tI/kPJ4uwtlzd6R9TEtIefAi+EW3apSUGJi5DuW/TerJw\nHarjylCrsMZ9qrEiTkHJ64pJt8D7G9GFfm210b/qGwKBgQD1JD+RI6kLGQCo2Qwf\nwnqTjqNEZD79MCMwiPm4D+7UjbxtegC6FtTe5vSINRsOvUxAf5ZE8qqmSFKrn14H\n8lSmuQpsYucbVWnUKlE01UE6MUCQU1/wyqyvlWtL+HY8FbyCDFhUrKoxNM6qhU4e\nf51Iz8Dmm1cj1MTizmTQVkHmRwKBgQD098syTBPwtFLkbrJyUeSvwbf+OArZeafO\njd3fa1LuU80z5fX5CVvH4kjMU+PZjEs9QGM947oGnLsfpn+7Dskx1B8ExCO+G6xH\nZy5VNMGadQce9Le5qQX+J7RZBpoHEzfij9GEGXoTa64LgpYfD3pqKGMQ2aC+aSaa\nD/WaTwefBwKBgGN/Wu2l8661bzcZIXqijO3nLw1LQuWw7Bd/ARxcGyvae2hT5Iej\nTLNMOmQuadUJsDFdl7hUZj8ni6ZtANVo3kLtR/XGDtdhS5r5sgwnolnkM7hgnsg0\n+vIpS2uCZTrt950xNYjorAtcy6UahiKK2WP8LudqlWvNqDwGWZTV7dlxAoGAcULE\nazvrmEX3cXCRBvRANNbvWBXXRlfOM106cVsw28pZPR6czIj8K32/ROGgnmwUOXy0\npd/NmdMLXYXg1r7uXSCDOvPoxrQKwnS9Yl3jCaQEJ9bjv26bu7fl1aeMvaqwEwuF\nxnr1C1ek/+Nfv3qrkbucmiTVAlShqWepma/iiS8CgYEAhRe9w8SdAdnC5/APufzs\n7Z4CXG4F3zJCJW2apmVibVk4l1IbdTD56yBpybrTxjxHAjrrfjz/0B/8JSHqDToD\nd2Tuf6wvDun9FN0EYfxpLJ/iXne/EI3SvDuQ5UhNVuq/0t4wwPR1wP6JKxJCUjcG\nVeLxX2Wq11Wll3MDCPqo9Xo=\n-----END PRIVATE KEY-----\n",
+  "client_email": "quillaydrive@quillay-405022.iam.gserviceaccount.com",
+  "client_id": "105501265708332058693",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/quillaydrive%40quillay-405022.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

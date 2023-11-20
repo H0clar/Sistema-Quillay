@@ -23,7 +23,7 @@
 
                             <div class="form-group">
                                 <label for="CorreoElectronico">{{ __('Correo Electrónico') }}</label>
-                                <input id="CorreoElectronico" type="email" class="form-control @error('email') is-invalid @enderror" name="CorreoElectronico" value="{{ old('CorreoElectronico') }}" required autocomplete="email" autofocus>
+                                <input id="CorreoElectronico" type="email" class="form-control @error('CorreoElectronico') is-invalid @enderror" name="CorreoElectronico" value="{{ old('CorreoElectronico') }}" required autocomplete="email" autofocus>
                                 @error('CorreoElectronico')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -33,7 +33,7 @@
 
                             <div class="form-group">
                                 <label for="Contrasena">{{ __('Contraseña') }}</label>
-                                <input id="Contrasena" type="password" class="form-control @error('password') is-invalid @enderror" name="Contrasena" required autocomplete="current-password">
+                                <input id="Contrasena" type="password" class="form-control @error('Contrasena') is-invalid @enderror" name="Contrasena" required autocomplete="current-password">
                                 @error('Contrasena')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

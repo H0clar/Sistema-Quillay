@@ -6,14 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 
-
 class LoginController extends Controller
-
 {
-
-
     protected $redirectTo = '/home';
 
     public function redirectToGoogle()
@@ -23,62 +20,76 @@ class LoginController extends Controller
 
     public function handleGoogleCallback()
     {
-        $user = Socialite::driver('google')->user();
+        try {
+            $user = Socialite::driver('google')->user();
 
-        // Buscar un usuario existente por correo electrónico
-        $existingUser = Usuario::where('CorreoElectronico', $user->getEmail())->first();
+            // Obtener el token de acceso del usuario validado por Google
+            $accessToken = $user->token;
 
-        if ($existingUser) {
-            // Si el usuario ya existe, autentica al usuario existente
-            Auth::login($existingUser);
-        } else {
-            // Si el usuario no existe, crea un nuevo usuario
-            $newUser = Usuario::create([
-                'NombreUsuario' => $user->getName(),
-                'CorreoElectronico' => $user->getEmail(),
-                'Contrasena' => null, // Puedes ajustar según tus requisitos
-            ]);
+            // Verificar si el usuario ya existe en la base de datos
+            $existingUser = Usuario::where('CorreoElectronico', $user->getEmail())->first();
 
-            Auth::login($newUser);
+            if ($existingUser) {
+                Auth::login($existingUser);
+            } else {
+                // Crear un nuevo usuario si no existe
+                $newUser = Usuario::create([
+                    'NombreUsuario' => $user->getName(),
+                    'CorreoElectronico' => $user->getEmail(),
+                    'Contrasena' => null, // Puedes ajustar según tus requisitos
+                ]);
+
+                Auth::login($newUser);
+            }
+
+            return redirect()->route('home');
+        } catch (\Exception $e) {
+            return redirect()->route('login');
         }
 
-        // Guardar información adicional en la sesión
-        session(['user_info' => [
-            'nombre' => Auth::user()->NombreUsuario,
-            'apellido' => Auth::user()->ApellidoUsuario,
-            'rol' => Auth::user()->rol,  
-        ]]);
+        $user->token;
 
-        return redirect()->route('home');
+        $user->refreshToken; // Para obtener el token de actualización
+
+
     }
 
     public function login(Request $request)
     {
         if ($request->isMethod('post')) {
-            $user = Usuario::where('CorreoElectronico', $request->input('CorreoElectronico'))->first();
+            $credentials = $request->only('CorreoElectronico', 'Contrasena');
 
-            if ($user && Hash::check($request->input('Contrasena'), $user->Contrasena)) {
-                // Contraseña válida, procede con la autenticación
-                Auth::login($user);
+            // Verificar si el usuario existe en la base de datos
+            $user = Usuario::where('CorreoElectronico', $credentials['CorreoElectronico'])->first();
 
-                // Obtener el nombre del tipo de usuario
-                $tipoUsuario = $user->tipoUsuario->Tipo;
+            if ($user !== null) {
+                // Verificar si es un usuario de Google
+                if ($user->Contrasena === null || $user->Contrasena === 'google_user') {
+                    // Realizar la lógica de autenticación para usuarios de Google
+                    Auth::login($user);
+                } else {
+                    // Realizar la lógica de autenticación para usuarios con contraseña cifrada
+                    if (Hash::check($credentials['Contrasena'], $user->Contrasena)) {
+                        Auth::login($user);
+                    } else {
+                        throw ValidationException::withMessages(['message' => 'Correo electrónico o contraseña incorrectos']);
+                    }
+                }
 
-                // Establece la información del usuario en la sesión
-                session(['user_info' => [
+                $userInfo = [
                     'nombreUsuario' => $user->NombreUsuario,
                     'apellidoUsuario' => $user->ApellidoUsuario,
-                    'tipoUsuario' => $tipoUsuario,
-                ]]);
+                    'tipoUsuario' => $user->tipoUsuario->Tipo,
+                ];
+
+                session(['user_info' => $userInfo]);
 
                 return redirect()->route('home');
             } else {
-                // Contraseña incorrecta, redirige al formulario de inicio de sesión con un mensaje de error
-                return redirect()->route('login')->withErrors(['message' => 'Credenciales incorrectas']);
+                throw ValidationException::withMessages(['message' => 'Correo electrónico o contraseña incorrectos']);
             }
         }
 
-        // Lógica para mostrar la vista de inicio de sesión para solicitudes GET
         return view('Login.login');
     }
 
@@ -97,10 +108,15 @@ class LoginController extends Controller
 
 
 
-    protected function authenticated(Request $request, $user)
+    public function renderDashboard()
     {
-        return redirect()->route('home');
+        $userInfo = session('user_info');
+
+        // Verificar el tipo de usuario
+        if ($userInfo['tipoUsuario'] === 'Profesor') {
+            return View::make('dashboard.profesor');
+        } else {
+            return View::make('dashboard.default');
+        }
     }
-
-
 }

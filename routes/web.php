@@ -10,6 +10,8 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\RespuestaController;
 use App\Http\Controllers\CambioController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MaterialProfeController;
+use App\Http\Controllers\MaterialTrabajadorUTPController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,38 +29,33 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-    // Aquí puedes colocar las rutas que requieren autenticación
-    Route::get('/dashboard', function () {
-        // Ruta de ejemplo para usuarios autenticados
-    })->name('dashboard');
+    // Rutas generales aquí...
+
+    // Rutas específicas para Trabajador UTP
+    Route::prefix('trabajador_utp')->group(function () {
+        Route::get('/material', [MaterialTrabajadorUTPController::class, 'index'])->name('material.trabajador_utp.index');
+        // Agrega otras rutas específicas para Trabajador UTP según sea necesario
+    });
+
+    // Otras rutas generales aquí...
+    
+    // Ruta común para la gestión de material
+    Route::get('/material', [MaterialController::class, 'index'])->name('material');
 });
 
-// Rutas para la gestión de usuarios
+// Rutas para la gestión de usuarios, niveles, cursos, asignaturas, etc.
+
+// Rutas AJAX y otras rutas específicas
 Route::resource('usuarios', UsuarioController::class);
-
-// Rutas para la gestión de niveles
 Route::resource('niveles', NivelController::class);
-
-// Rutas para la gestión de cursos
 Route::resource('cursos', CursoController::class);
-
-// Rutas para la gestión de asignaturas
 Route::resource('asignaturas', AsignaturaController::class);
-
-// Rutas para la gestión de materiales
 Route::resource('materiales', MaterialController::class);
-
-// Rutas para la gestión de comentarios y respuestas
 Route::resource('comentarios', ComentarioController::class);
 Route::resource('respuestas', RespuestaController::class);
-
-// Rutas para la gestión de cambios
 Route::resource('cambios', CambioController::class);
 
-// Rutas para la gestión de notificaciones
 Route::get('/notificaciones', [NotificacionesController::class, 'index'])->name('notificaciones.index');
-
-// Rutas para obtener cursos y asignaturas mediante AJAX
 Route::get('/cursos-por-nivel-educativo/{nivelEducativoID}', [MaterialController::class, 'getCursosByNivelEducativo']);
 Route::get('/asignaturas-por-curso/{cursoID}', [MaterialController::class, 'getAsignaturasByCurso']);
 Route::get('/asignaturas-por-profesor/{profesorID}', [MaterialController::class, 'getAsignaturasByProfesor']);

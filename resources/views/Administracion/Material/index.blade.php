@@ -175,51 +175,52 @@
 
 <script>
     function cargarCursos() {
-        var nivelEducativoID = document.getElementById('nivelEducativo').value;
-        var cursoSelect = document.getElementById('curso');
-    
-        // Realiza una solicitud AJAX para obtener los cursos
-        $.ajax({
-            url: '/cursos-por-nivel-educativo/' + nivelEducativoID,
-            type: 'GET',
-            success: function (response) {
-                // Limpiar y actualizar el selector de cursos
-                cursoSelect.innerHTML = '<option value="">Todos los Cursos</option>';
-                for (var cursoID in response) {
-                    cursoSelect.innerHTML += '<option value="' + cursoID + '">' + response[cursoID] + '</option>';
-                }
-    
-                // Llama a la función cargarAsignaturas al seleccionar un curso
-                cursoSelect.addEventListener('change', function () {
-                    cargarAsignaturas();
-                });
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    }
-    
-    function cargarAsignaturas() {
-        var cursoID = document.getElementById('curso').value;
-        var asignaturaSelect = document.getElementById('asignatura');
-    
-        // Realiza una solicitud AJAX para obtener las asignaturas
-        $.ajax({
-            url: '/asignaturas-por-curso/' + cursoID, // Asegúrate de tener la ruta correcta en web.php
-            type: 'GET',
-            success: function (response) {
-                // Limpiar y actualizar el selector de asignaturas
-                asignaturaSelect.innerHTML = '<option value="">Todas las Asignaturas</option>';
-                for (var i = 0; i < response.length; i++) {
-                    asignaturaSelect.innerHTML += '<option value="' + response[i].AsignaturaID + '">' + response[i].Nombre + '</option>';
-                }
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    }
+    var nivelEducativoID = document.getElementById('nivelEducativo').value;
+    var cursoSelect = document.getElementById('curso');
+ 
+    // Realiza una solicitud AJAX para obtener los cursos
+    $.ajax({
+        url: '/cursos-por-nivel-educativo/' + nivelEducativoID,
+        type: 'GET',
+        success: function (response) {
+            // Limpiar y actualizar el selector de cursos
+            cursoSelect.innerHTML = '<option value="">Todos los Cursos</option>';
+            response.forEach(function (curso) {
+                cursoSelect.innerHTML += '<option value="' + curso.CursoID + '">' + curso.Nombre + '</option>';
+            });
+ 
+            // Llama a la función cargarAsignaturas al seleccionar un curso
+            cursoSelect.addEventListener('change', function () {
+                cargarAsignaturas();
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function cargarAsignaturas() {
+    var cursoID = document.getElementById('curso').value;
+    var asignaturaSelect = document.getElementById('asignatura');
+
+    // Realiza una solicitud AJAX para obtener las asignaturas
+    $.ajax({
+        url: '/asignaturas-por-curso/' + cursoID,
+        type: 'GET',
+        success: function (response) {
+            // Limpiar y actualizar el selector de asignaturas
+            asignaturaSelect.innerHTML = '<option value="">Todas las Asignaturas</option>';
+            response.forEach(function (asignatura) {
+                asignaturaSelect.innerHTML += '<option value="' + asignatura.AsignaturaID + '">' + asignatura.Nombre + '</option>';
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
     
     
     

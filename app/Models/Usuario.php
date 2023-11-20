@@ -81,4 +81,13 @@ class Usuario extends Model implements AuthenticatableContract
     {
         $this->attributes['Contrasena'] = Hash::make($value);
     }
+
+    public function esProfesor()
+    {
+        // Lógica para determinar si el usuario es un profesor
+        // Puedes basarte en el tipo de usuario u otras condiciones según tus necesidades.
+        // Aquí, estoy asumiendo que tienes una columna 'TipoUsuarioID' que identifica a los profesores.
+
+        return $this->tipoUsuario->NombreTipoUsuario == 'Profesor';
+    }
 }

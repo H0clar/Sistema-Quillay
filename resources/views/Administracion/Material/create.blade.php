@@ -80,15 +80,16 @@
             success: function (response) {
                 // Limpiar y actualizar el selector de cursos
                 cursoSelect.innerHTML = '<option value="">Seleccione un curso</option>';
-                for (var cursoID in response) {
-                    cursoSelect.innerHTML += '<option value="' + cursoID + '">' + response[cursoID] + '</option>';
-                }
+                response.forEach(function (curso) {
+                    cursoSelect.innerHTML += '<option value="' + curso.CursoID + '">' + curso.Nombre + '</option>';
+                });
             },
             error: function (error) {
                 console.log(error);
             }
         });
     }
+
 
     function cargarAsignaturas() {
         var cursoID = document.getElementById('CursoID').value;

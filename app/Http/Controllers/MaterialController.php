@@ -16,52 +16,66 @@ class MaterialController extends Controller
 {
     public function index(Request $request)
     {
-        $tipoArchivoFilter = $request->input('tipoArchivo');
-        $usuarioFilter = $request->input('usuario');
-        $asignaturaFilter = $request->input('asignatura');
-        $nivelEducativoFilter = $request->input('nivelEducativo');
-        $cursoFilter = $request->input('curso');
-        $fechaFilter = $request->input('fecha');
+        $userInfo = session('user_info');
 
-        $tiposArchivo = TipoArchivo::all();
-        $usuarios = Usuario::all();
-        $asignaturas = Asignatura::all();
-        $nivelesEducativos = NivelEducativo::all();
-        $cursos = Curso::all();
-        
+        // Verificar el tipo de usuario
+        if ($userInfo['tipoUsuario'] === 'Profesor') {
+            return view('Profesor.Material.index'); // Vista para profesores
+        } elseif ($userInfo['tipoUsuario'] === 'Trabajador_UTP') {
+            return view('Trabajador_UTP.Material.index'); // Vista para trabajadores UTP
 
-        $query = MaterialEducativo::with('usuario', 'asignatura', 'curso', 'nivelEducativo', 'tipoArchivo');
+        } elseif ($userInfo['tipoUsuario'] === 'Administrador') {
+            $tipoArchivoFilter = $request->input('tipoArchivo');
+            $usuarioFilter = $request->input('usuario');
+            $asignaturaFilter = $request->input('asignatura');
+            $nivelEducativoFilter = $request->input('nivelEducativo');
+            $cursoFilter = $request->input('curso');
+            $fechaFilter = $request->input('fecha');
 
-        if ($tipoArchivoFilter) {
-            $query->whereHas('tipoArchivo', function ($q) use ($tipoArchivoFilter) {
-                $q->where('Tipo', $tipoArchivoFilter);
-            });
+            $tiposArchivo = TipoArchivo::all();
+            $usuarios = Usuario::all();
+            $asignaturas = Asignatura::all();
+            $nivelesEducativos = NivelEducativo::all();
+            $cursos = Curso::all();
+
+            $query = MaterialEducativo::with('usuario', 'asignatura', 'curso', 'nivelEducativo', 'tipoArchivo');
+
+            if ($tipoArchivoFilter) {
+                $query->whereHas('tipoArchivo', function ($q) use ($tipoArchivoFilter) {
+                    $q->where('Tipo', $tipoArchivoFilter);
+                });
+            }
+
+            if ($usuarioFilter) {
+                $query->where('UsuarioID', $usuarioFilter);
+            }
+
+            if ($asignaturaFilter) {
+                $query->where('AsignaturaID', $asignaturaFilter);
+            }
+
+            if ($nivelEducativoFilter) {
+                $query->where('NivelEducativoID', $nivelEducativoFilter);
+            }
+
+            if ($cursoFilter) {
+                $query->where('CursoID', $cursoFilter);
+            }
+
+            if ($fechaFilter) {
+                $query->whereDate('FechaSubida', $fechaFilter);
+            }
+
+            $materiales = $query->get();
+
+            return view('Administracion.Material.index', compact('materiales', 'tiposArchivo', 'tipoArchivoFilter', 'usuarios', 'usuarioFilter', 'asignaturas', 'asignaturaFilter', 'nivelesEducativos', 'nivelEducativoFilter', 'cursos', 'cursoFilter', 'fechaFilter'));
+        } else {
+            // Redireccionar a alguna otra vista o mostrar un mensaje de error
+            return redirect()->route('home')->with('error', 'No tienes permisos para acceder a esta página.');
         }
-
-        if ($usuarioFilter) {
-            $query->where('UsuarioID', $usuarioFilter);
-        }
-
-        if ($asignaturaFilter) {
-            $query->where('AsignaturaID', $asignaturaFilter);
-        }
-
-        if ($nivelEducativoFilter) {
-            $query->where('NivelEducativoID', $nivelEducativoFilter);
-        }
-
-        if ($cursoFilter) {
-            $query->where('CursoID', $cursoFilter);
-        }
-
-        if ($fechaFilter) {
-            $query->whereDate('FechaSubida', $fechaFilter);
-        }
-
-        $materiales = $query->get();
-
-        return view('Administracion.Material.index', compact('materiales', 'tiposArchivo', 'tipoArchivoFilter', 'usuarios', 'usuarioFilter', 'asignaturas', 'asignaturaFilter', 'nivelesEducativos', 'nivelEducativoFilter', 'cursos', 'cursoFilter', 'fechaFilter'));
     }
+
+
 
     public function create()
     {
@@ -191,13 +205,10 @@ class MaterialController extends Controller
 
     public function getCursosByNivelEducativo($nivelEducativoID)
     {
-        $cursos = Curso::where('NivelEducativoID', $nivelEducativoID)->pluck('Nombre', 'CursoID');
+        $cursos = Curso::where('NivelEducativoID', $nivelEducativoID)->get();
 
         return response()->json($cursos);
     }
-
-
-
 
     public function getAsignaturasByCurso($cursoID)
     {
@@ -205,7 +216,4 @@ class MaterialController extends Controller
 
         return response()->json($asignaturas);
     }
-
-    
-
 }
