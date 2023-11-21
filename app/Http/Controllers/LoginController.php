@@ -42,16 +42,18 @@ class LoginController extends Controller
                 Auth::login($newUser);
             }
 
+            // Establecer la clave 'usuarioID' en la sesión
+            session(['user_info' => [
+                'usuarioID' => Auth::user()->UsuarioID,
+                'nombreUsuario' => Auth::user()->NombreUsuario,
+                'apellidoUsuario' => Auth::user()->ApellidoUsuario,
+                'tipoUsuario' => Auth::user()->tipoUsuario->Tipo,
+            ]]);
+
             return redirect()->route('home');
         } catch (\Exception $e) {
             return redirect()->route('login');
         }
-
-        $user->token;
-
-        $user->refreshToken; // Para obtener el token de actualización
-
-
     }
 
     public function login(Request $request)
