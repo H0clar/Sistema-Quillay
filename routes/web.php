@@ -12,6 +12,8 @@ use App\Http\Controllers\CambioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MaterialProfeController;
 use App\Http\Controllers\MaterialTrabajadorUTPController;
+
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -60,3 +62,18 @@ Route::get('/cursos-por-nivel-educativo/{nivelEducativoID}', [MaterialController
 Route::get('/asignaturas-por-curso/{cursoID}', [MaterialController::class, 'getAsignaturasByCurso']);
 Route::get('/asignaturas-por-profesor/{profesorID}', [MaterialController::class, 'getAsignaturasByProfesor']);
 Route::get('/cursos-por-profesor/{profesorID}', [MaterialController::class, 'getCursosByProfesor']);
+
+// Rutas para el controlador MaterialProfeController utilizando Route::resource
+Route::resource('materialprofe', MaterialProfeController::class);
+
+// Rutas específicas para el profesor fuera de Route::resource
+Route::get('/materialProfe/create', [MaterialProfeController::class, 'create'])->name('materialProfe.create');
+Route::post('/materialProfe', [MaterialProfeController::class, 'store'])->name('materialProfe.store');
+
+
+
+
+Route::prefix('profesor')->middleware(['auth', 'profesor'])->group(function () {
+    Route::resource('materialProfe', MaterialProfeController::class);
+});
+

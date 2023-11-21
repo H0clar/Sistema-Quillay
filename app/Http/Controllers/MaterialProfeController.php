@@ -1,20 +1,46 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Profesor;
 
-use Illuminate\Support\Facades\View;
+use App\Http\Controllers\Controller;
+use App\Models\MaterialEducativo;
+use Illuminate\Support\Facades\Auth;
 
 class MaterialProfeController extends Controller
 {
     public function index()
     {
-        $userInfo = session('user_info');
+        // Asegurémonos de que el usuario esté autenticado
+        if (Auth::check()) {
+            // Obtén el ID del usuario autenticado
+            $usuarioID = Auth::user()->UsuarioID;
 
-        // Verificar el tipo de usuario
-        if ($userInfo['tipoUsuario'] === 'Profesor') {
-            return view('Profesor.Material.index'); // Vista para profesores
+            // Obtén los materiales para el profesor actualmente autenticado
+            $materialesProfe = MaterialEducativo::where('UsuarioID', $usuarioID)->get();
+
+            // Retorna la vista con la variable $materialesProfe
+            return view('Profesor.Material.index', compact('materialesProfe'));
         } else {
-            return view('Administracion.Material.index'); // Vista para administradores
+            // Redirecciona o toma alguna acción si el usuario no está autenticado
+            return redirect()->route('login');
         }
     }
+
+    // Otras funciones que puedas necesitar en el controlador...
+
+
+
+    public function create()
+    {
+        // Lógica para obtener datos necesarios para la creación
+        $cursos = Curso::all();
+        $asignaturas = Asignatura::all();
+        $nivelesEducativos = NivelEducativo::all();
+        $tiposArchivo = TipoArchivo::all();
+
+        return view('Profesor.Material.create', compact('cursos', 'asignaturas', 'nivelesEducativos', 'tiposArchivo'));
+    }
+
+    // Agrega las funciones necesarias para la creación, edición y eliminación según tus necesidades
+    // ...
 }
