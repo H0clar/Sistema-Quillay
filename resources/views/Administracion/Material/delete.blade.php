@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <h2 class="user-form-title">Ocultar Material Educativo</h2>
 
     <form method="POST" action="{{ route('materiales.destroy', $material->MaterialID) }}" onsubmit="return confirm('¿Seguro que quieres ocultar este material?');" class="user-form">

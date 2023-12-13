@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <h2 class="user-form-title">Editar Material Educativo</h2>
 
     <form method="POST" action="{{ route('materiales.update', $material->MaterialID) }}" enctype="multipart/form-data" class="user-form">

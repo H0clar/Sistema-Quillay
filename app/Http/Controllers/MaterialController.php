@@ -1,19 +1,25 @@
 <?php
 
-
-
 namespace App\Http\Controllers;
 
-use App\Models\MaterialEducativo;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use App\Models\TipoArchivo;
-use App\Models\Usuario;
-use App\Models\Curso;
-use App\Models\Asignatura;
-use App\Models\NivelEducativo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Google\Client;
+use Google\Service\Drive;
+use App\Models\MaterialEducativo;
+use App\Models\TipoArchivo;
+use Illuminate\Support\Facades\File;
+
+use Google\Service\Drive\DriveFileList;
+
+
+
+use App\Models\Usuario;
+use App\Models\Asignatura;
+use App\Models\Curso;
+use App\Models\NivelEducativo;
+use Illuminate\Support\Facades\Auth;
+
 
 class MaterialController extends Controller
 {
@@ -21,26 +27,21 @@ class MaterialController extends Controller
     {
         $userInfo = session('user_info');
 
-        // Verificar el tipo de usuario y redirigir a la vista correspondiente
         if ($userInfo['tipoUsuario'] === 'Profesor') {
             return $this->indexForProfesor($request);
         } elseif ($userInfo['tipoUsuario'] === 'Trabajador_UTP') {
-            return view('Trabajador_UTP.Material.index'); // Vista para trabajadores UTP
+            return view('Trabajador_UTP.Material.index'); 
         } elseif ($userInfo['tipoUsuario'] === 'Administrador') {
             return $this->indexForAdministrador($request);
         } else {
-            // Redireccionar a alguna otra vista o mostrar un mensaje de error
             return redirect()->route('home')->with('error', 'No tienes permisos para acceder a esta página.');
         }
     }
 
-    // Vista específica para el Profesor
     private function indexForProfesor(Request $request)
     {
-        // Obtener el usuario actualmente autenticado
         $usuario = Auth::user();
 
-        // Filtrar los materiales asociados al usuario
         $materialesProfe = MaterialEducativo::with('tipoArchivo', 'asignatura', 'curso', 'nivelEducativo')
             ->where('UsuarioID', $usuario->UsuarioID)
             ->get();
@@ -48,9 +49,6 @@ class MaterialController extends Controller
         return view('Profesor.Material.index', compact('materialesProfe'));
     }
 
-
-
-    // Vista específica para el Administrador
     private function indexForAdministrador(Request $request)
     {
         $tipoArchivoFilter = $request->input('tipoArchivo');
@@ -74,18 +72,11 @@ class MaterialController extends Controller
             });
         }
 
-        // Aplicar otros filtros según sea necesario para el administrador
 
         $materiales = $query->get();
 
         return view('Administracion.Material.index', compact('materiales', 'tiposArchivo', 'tipoArchivoFilter', 'usuarios', 'usuarioFilter', 'asignaturas', 'asignaturaFilter', 'nivelesEducativos', 'nivelEducativoFilter', 'cursos', 'cursoFilter', 'fechaFilter'));
     }
-
-    // Otros métodos del controlador, si es necesario...
-
-
-
-
 
     public function create()
     {
@@ -97,6 +88,10 @@ class MaterialController extends Controller
 
         return view('Administracion.Material.create', compact('cursos', 'asignaturas', 'profesores', 'nivelesEducativos', 'tiposArchivo'));
     }
+
+    
+
+
 
     public function store(Request $request)
     {
@@ -112,25 +107,70 @@ class MaterialController extends Controller
 
         $archivoSubido = $request->file('archivo');
         $nombreDelArchivoGuardado = Str::random(40) . '.' . $archivoSubido->getClientOriginalExtension();
-        $archivoSubido->move(public_path('storage'), $nombreDelArchivoGuardado);
 
-        $estado = $request->input('Estado') === 'Activo' ? true : false;
+        // Crea una instancia del cliente de Google
+        $client = new Client();
+        $client->setApplicationName('phpQuillay');
+        $client->setScopes([Drive::DRIVE_FILE]);
 
-        $material = new MaterialEducativo([
-            'TipoArchivoID' => $request->input('TipoArchivoID'),
-            'UsuarioID' => $request->input('ProfesorID'),
-            'AsignaturaID' => $request->input('AsignaturaID'),
-            'CursoID' => $request->input('CursoID'),
-            'NivelEducativoID' => $request->input('NivelEducativoID'),
-            'Estado' => $estado,
-            'RutaGoogleDrive' => 'storage/' . $nombreDelArchivoGuardado,
-            'FechaSubida' => now()->format('Y-m-d'),
+        // Carga las credenciales
+        // Carga las credenciales
+        $client->setAuthConfig('C:\Users\julio\Desktop\Quillay\credenciales.json');
+
+        $driveService = new Drive($client);
+
+        // ID de la carpeta en Google Drive
+        $folderId = '14u1s-SkZqVoBAkkWxv2j3I8G1bgRJZ_b';
+
+        // Subir el archivo a Google Drive en la carpeta compartida
+        $fileMetadata = new \Google\Service\Drive\DriveFile([
+            'name' => $nombreDelArchivoGuardado,
+            'parents' => [$folderId]
         ]);
 
-        $material->save();
+        try {
+            $content = file_get_contents($archivoSubido->getRealPath());
 
-        return redirect()->route('materiales.index')->with('success', 'Material educativo agregado correctamente.');
+            $file = $driveService->files->create($fileMetadata, [
+                'data' => $content,
+                'mimeType' => 'application/pdf',
+                'uploadType' => 'multipart',
+            ]);
+
+            $estado = $request->input('Estado') === 'Activo' ? true : false;
+
+            $material = new MaterialEducativo([
+                'TipoArchivoID' => $request->input('TipoArchivoID'),
+                'UsuarioID' => $request->input('ProfesorID'),
+                'AsignaturaID' => $request->input('AsignaturaID'),
+                'CursoID' => $request->input('CursoID'),
+                'NivelEducativoID' => $request->input('NivelEducativoID'),
+                'Estado' => $estado,
+                'RutaGoogleDrive' => $file->id,  // Almacena el ID del archivo en Google Drive
+                'FechaSubida' => now()->format('Y-m-d'),
+            ]);
+
+            $material->save();
+
+            return redirect()->route('materiales.index')->with('success', 'Material educativo agregado correctamente.');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function destroy($id)
     {

@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <h2 class="user-list-title">Listado de Material Educativo</h2>
 
     <a href="{{ route('materiales.create') }}" class="btn btn-primary add-user-button add-user-button--margin">Agregar Material Educativo</a>

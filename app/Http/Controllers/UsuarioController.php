@@ -32,7 +32,7 @@ class UsuarioController extends Controller
             'apellido_usuario' => 'required|max:50',
             'tipo_usuario_id' => 'required|exists:TipoUsuario,TipoUsuarioID',
             'rut_usuario' => 'required|max:20',
-            'contrasena' => 'required|min:6', // Ajustar la regla según tus requisitos
+            'contrasena' => 'required|min:6', 
         ]);
 
         Usuario::create([
